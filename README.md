@@ -23,4 +23,4 @@ Copy `.env.example` to `.env.local` and add real values only when checkout is im
 
 ## Deployment
 
-The project is configured for OpenAI Sites and a Cloudflare-compatible build. Replace the temporary `example.com` base in `app/sitemap.ts` and `app/robots.ts` with the production domain before launch.
+The project is configured for OpenAI Sites and a Cloudflare-compatible build. If the production domain changes, update the base URL in `app/sitemap.ts` and `app/robots.ts`.
