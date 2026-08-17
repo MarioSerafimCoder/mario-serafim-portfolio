@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = { title: "About — Mário Serafim", description: "Mário Serafim is a Creative and Art Director based in Fortaleza, Brazil." };
 
@@ -24,7 +23,7 @@ export default function AboutPage() {
         <p>Professional record</p>
         {["Experience", "Selected clients", "Tools", "Recognition"].map((item) => <div key={item}><h3>{item}</h3><p>[Add verified information]</p></div>)}
       </section>
-      <section className="about-contact"><p>Available for selected projects and collaborations.</p><h2>Have an idea<br />that needs direction?</h2><Link href="/contact">Start a project ↗</Link></section>
+      <section className="about-contact"><p>Available for selected projects and collaborations.</p><h2>Have an idea<br />that needs direction?</h2><a href="/contact">Start a project ↗</a></section>
     </main>
   );
 }

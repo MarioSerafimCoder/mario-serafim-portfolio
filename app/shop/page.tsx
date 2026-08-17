@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { products } from "../../data/products";
 import { NewsletterForm } from "../../components/newsletter-form";
 
@@ -23,14 +22,14 @@ export default function ShopPage() {
       <div className="shop-filters" aria-label="Product categories">All · Templates · Mockups · Assets · Tools · Guides</div>
       <section className="product-grid" aria-label="Products coming soon">
         {products.map((product) => (
-          <Link href={`/shop/${product.slug}`} key={product.slug} className="product-card">
+          <a href={`/shop/${product.slug}`} key={product.slug} className="product-card">
             <div className={`product-cover ${product.tone}`} role="img" aria-label={`${product.name} cover placeholder`}>
               <span>{product.id} / {product.category}</span>
               <strong>{product.name}</strong>
               <small>Product cover pending</small>
             </div>
             <div><span>{product.name}</span><span>{product.status === "coming-soon" ? "Coming soon" : `R$ ${product.price}`}</span></div>
-          </Link>
+          </a>
         ))}
       </section>
 

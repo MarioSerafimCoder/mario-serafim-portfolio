@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const projects = [
   { title: "Granistone", type: "Brand Direction", year: "2026", tone: "tone-a" },
   { title: "Queen Aquamarine", type: "Visual Identity", year: "2025", tone: "tone-b" },
@@ -20,16 +18,16 @@ export default function Home() {
         <p className="manifesto-copy">I shape brands, campaigns and digital experiences into clear, memorable visual systems.</p>
       </section>
       <section className="selected" aria-labelledby="selected-title">
-        <div className="section-head"><p className="eyebrow">02 / Selected work</p><Link href="/work">View all work ↗</Link></div>
+        <div className="section-head"><p className="eyebrow">02 / Selected work</p><a href="/work">View all work ↗</a></div>
         <h2 id="selected-title">Selected<br />work.</h2>
         <div className="project-grid">
           {projects.map((project, index) => (
-            <Link href={`/work/${project.title.toLowerCase().replaceAll(" ", "-")}`} className={`project-card project-${index + 1}`} key={project.title}>
+            <a href={`/work/${project.title.toLowerCase().replaceAll(" ", "-")}`} className={`project-card project-${index + 1}`} key={project.title}>
               <div className={`media-placeholder ${project.tone}`} role="img" aria-label={`${project.title} project image placeholder`}>
                 <span className="placeholder-index">0{index + 1}</span><strong>{project.title}</strong><span>Visual material pending</span>
               </div>
               <div className="project-meta"><span>{project.title}</span><span>{project.type}</span><span>{project.year}</span></div>
-            </Link>
+            </a>
           ))}
         </div>
       </section>

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { projects } from "../../data/projects";
 
 export const metadata: Metadata = {
@@ -25,7 +24,7 @@ export default function WorkPage() {
       <section className="work-editorial" aria-label="Selected projects">
         {projects.map((project, index) => (
           <article className={`editorial-project editorial-project-${index + 1}`} key={project.slug}>
-            <Link href={`/work/${project.slug}`} className="editorial-project-link">
+            <a href={`/work/${project.slug}`} className="editorial-project-link">
               <div className={`media-placeholder editorial-cover ${project.tone}`} role="img" aria-label={`${project.title} cover placeholder`}>
                 <span className="placeholder-index">{project.id}</span>
                 <strong>{project.title}</strong>
@@ -37,20 +36,20 @@ export default function WorkPage() {
                 <p>{project.categories.join(" · ")}</p>
                 <span>{project.year} ↗</span>
               </div>
-            </Link>
+            </a>
           </article>
         ))}
       </section>
 
       <section className="work-index">
-        <div className="section-head"><p className="eyebrow">Index / All projects</p><Link href="/archive">Open archive ↗</Link></div>
+        <div className="section-head"><p className="eyebrow">Index / All projects</p><a href="/archive">Open archive ↗</a></div>
         {projects.map((project) => (
-          <Link href={`/work/${project.slug}`} key={project.slug} className="work-row">
+          <a href={`/work/${project.slug}`} key={project.slug} className="work-row">
             <span>{project.id}</span>
             <div><h2>{project.title}</h2><p>{project.categories.join(" / ")}</p></div>
             <span>{project.year}</span>
             <span className="row-action">View case ↗</span>
-          </Link>
+          </a>
         ))}
       </section>
     </main>

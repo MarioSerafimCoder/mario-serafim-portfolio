@@ -23,6 +23,11 @@ const eslintConfig = defineConfig([
   jsxA11y.flatConfigs.recommended,
   next.configs["core-web-vitals"],
   {
+    rules: {
+      // vinext beta currently breaks client-side Link navigation after deployment.
+      // Native anchors intentionally provide reliable full-page navigation.
+      "@next/next/no-html-link-for-pages": "off",
+    },
     languageOptions: {
       globals: {
         ...globals.browser,

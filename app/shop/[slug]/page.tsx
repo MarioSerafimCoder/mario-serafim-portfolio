@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToBag } from "../../../components/add-to-bag";
 import { getProduct, products } from "../../../data/products";
@@ -48,7 +47,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div><span>File type</span><p>{product.fileType}</p></div>
         <div><span>File size</span><p>{product.fileSize}</p></div>
         <div><span>Updated</span><p>{product.updatedAt}</p></div>
-        <div><span>License</span><p>{product.license}<br /><Link href="/license">View license ↗</Link></p></div>
+        <div><span>License</span><p>{product.license}<br /><a href="/license">View license ↗</a></p></div>
       </section>
 
       <section className="case-gallery product-gallery" aria-label={`${product.name} gallery placeholders`}>
@@ -60,10 +59,10 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <section className="product-license-summary">
         <p>License / Draft</p>
         <h2>Use it. Adapt it.<br />Do not redistribute it.</h2>
-        <p>The final license must be reviewed before sales begin. <Link href="/license">Read the current draft ↗</Link></p>
+        <p>The final license must be reviewed before sales begin. <a href="/license">Read the current draft ↗</a></p>
       </section>
 
-      {related.length > 0 && <section className="related-products"><p>Related tools</p>{related.map((item) => <Link key={item.slug} href={`/shop/${item.slug}`}><span>{item.category}</span><strong>{item.name}</strong><span>View product ↗</span></Link>)}</section>}
+      {related.length > 0 && <section className="related-products"><p>Related tools</p>{related.map((item) => <a key={item.slug} href={`/shop/${item.slug}`}><span>{item.category}</span><strong>{item.name}</strong><span>View product ↗</span></a>)}</section>}
     </main>
   );
 }

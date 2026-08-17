@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -74,12 +73,12 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <header className={`site-header persistent-header ${headerOnDark ? "header-on-dark" : ""}`}>
-        <Link href="/" className="mark" aria-label="Mário Serafim — Home">MS/</Link>
+        <a href="/" className="mark" aria-label="Mário Serafim — Home">MS/</a>
         <nav aria-label="Primary navigation">
-          <Link href="/work">Work</Link>
-          <Link href="/lab">Lab</Link>
-          <Link href="/about">About</Link>
-          <Link href="/shop">Shop</Link>
+          <a href="/work">Work</a>
+          <a href="/lab">Lab</a>
+          <a href="/about">About</a>
+          <a href="/shop">Shop</a>
         </nav>
         <div className="header-actions">
           <button onClick={() => setBagOpen(true)} aria-label={`Open bag with ${bag.length} items`}>Bag ({bag.length})</button>
@@ -90,10 +89,10 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <div id="main-content">{children}</div>
 
       <footer className="footer">
-        <Link href="/" className="footer-mark" aria-label="Mário Serafim — Home">MS/</Link>
+        <a href="/" className="footer-mark" aria-label="Mário Serafim — Home">MS/</a>
         <p>Creative direction<br />Art direction</p>
-        <div><Link href="/work">Work</Link><Link href="/about">About</Link><Link href="/contact">Contact</Link></div>
-        <div className="footer-legal"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/license">License</Link></div>
+        <div><a href="/work">Work</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+        <div className="footer-legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/license">License</a></div>
         <p>Fortaleza — Brazil<br />© 2026</p>
       </footer>
 
@@ -104,9 +103,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         </div>
         <nav>
           {navigation.map((item, index) => (
-            <Link key={item} href={`/${item}`} tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)}>
+            <a key={item} href={`/${item}`} tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)}>
               <span>0{index + 1}</span>{item}
-            </Link>
+            </a>
           ))}
         </nav>
         <div className="overlay-bottom"><span>Fortaleza — Brazil</span><span>Available for selected projects</span></div>

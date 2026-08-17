@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "../../../data/projects";
 
@@ -90,8 +89,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <nav className="case-navigation" aria-label="Project navigation">
-        <Link href={`/work/${previous.slug}`}><span>Previous project</span><strong>{previous.title}</strong></Link>
-        <Link href={`/work/${next.slug}`}><span>Next project</span><strong>{next.title}</strong></Link>
+        <a href={`/work/${previous.slug}`}><span>Previous project</span><strong>{previous.title}</strong></a>
+        <a href={`/work/${next.slug}`}><span>Next project</span><strong>{next.title}</strong></a>
       </nav>
     </main>
   );
