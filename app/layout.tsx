@@ -7,6 +7,7 @@ const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mario-serafim-portfolio.mario-92.chatgpt.site"),
   title: "Mário Serafim — Creative Director & Art Director",
   description: "Creative direction, art direction, branding and digital experiences.",
   icons: {
