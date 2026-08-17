@@ -1,0 +1,2 @@
+import Link from "next/link"; import { projects } from "../../data/projects";
+export default function ArchivePage(){return <main className="inner-page"><header className="page-hero compact"><p>02 / Index</p><h1>Archive.</h1></header><section className="archive-table"><div className="archive-head"><span>No.</span><span>Project</span><span>Discipline</span><span>Year</span></div>{projects.map(p=><Link href={`/work/${p.slug}`} key={p.slug}><span>{p.id}</span><strong>{p.title}</strong><span>{p.categories[0]}</span><span>{p.year}</span></Link>)}</section></main>}

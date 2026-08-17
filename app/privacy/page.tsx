@@ -1,0 +1,1 @@
+export default function Privacy(){return <main className="legal-page"><p>Legal / Draft</p><h1>Privacy.</h1><h2>Review required before publication.</h2><p>[Add reviewed privacy policy covering contact form data, analytics, cookies, newsletter and future commerce processing.]</p></main>}

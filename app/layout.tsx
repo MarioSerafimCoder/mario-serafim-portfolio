@@ -1,0 +1,39 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { SiteChrome } from "../components/site-chrome";
+
+const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Mário Serafim — Creative Director & Art Director",
+  description: "Creative direction, art direction, branding and digital experiences.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
+  openGraph: {
+    title: "Mário Serafim — Creative Director & Art Director",
+    description: "Creative direction, art direction, branding and digital experiences.",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Mário Serafim — Creative Direction / Art Direction" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mário Serafim — Creative Director & Art Director",
+    description: "Creative direction, art direction, branding and digital experiences.",
+    images: ["/og.png"],
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable}`}><SiteChrome>{children}</SiteChrome></body>
+    </html>
+  );
+}

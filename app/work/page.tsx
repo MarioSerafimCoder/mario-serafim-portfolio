@@ -1,0 +1,4 @@
+import Link from "next/link";
+import { projects } from "../../data/projects";
+export const metadata = { title:"Work — Mário Serafim", description:"Selected creative direction and art direction projects." };
+export default function WorkPage(){ return <main className="inner-page"><header className="page-hero"><p>01 / Selected projects</p><h1>Work.</h1><p>Brand identities, campaigns and digital experiences shaped into coherent visual worlds.</p></header><section className="work-list">{projects.map(project=><Link href={`/work/${project.slug}`} key={project.slug} className="work-row"><span>{project.id}</span><div><h2>{project.title}</h2><p>{project.categories.join(" / ")}</p></div><span>{project.year}</span><div className={`mini-placeholder ${project.tone}`}><span>Asset pending</span></div></Link>)}</section></main> }

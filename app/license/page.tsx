@@ -1,0 +1,1 @@
+export default function License(){return <main className="legal-page"><p>Legal / Draft</p><h1>License.</h1><h2>Review required before publication.</h2><p>[Add reviewed permitted use, restrictions, attribution, redistribution and commercial-use terms for digital products.]</p></main>}
