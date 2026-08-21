@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AddToBag } from "../../../components/add-to-bag";
-import { getProduct, products } from "../../../data/products";
+import { commerceEnabled, getProduct, products } from "../../../data/products";
 
 export function generateStaticParams() { return products.map(({ slug }) => ({ slug })); }
 
@@ -20,6 +20,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const product = getProduct((await params).slug);
   if (!product) notFound();
   const related = products.filter((item) => item.slug !== product.slug);
+  const available = commerceEnabled && product.status === "available";
+  const availability = product.status === "coming-soon" ? "Em breve" : product.status === "sold-out" ? "Esgotado" : "Indisponível";
 
   return (
     <main className="product-page">
@@ -30,9 +32,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <p>{product.category} / {product.status === "coming-soon" ? "em breve" : "disponível"}</p>
         <h1>{product.name}</h1>
         <p className="product-description">{product.description}</p>
-        <div className="product-price">R$ {product.price}</div>
-        <AddToBag item={{ slug: product.slug, name: product.name, price: product.price }} disabled={product.status !== "available"} />
-        <p className="checkout-note">Lançamento em breve.</p>
+        {available ? (
+          <><div className="product-price">R$ {product.price}</div><AddToBag item={{ slug: product.slug, name: product.name, price: product.price }} /></>
+        ) : (
+          <div className="product-availability"><span>Disponibilidade</span><strong>{availability}</strong></div>
+        )}
       </section>
 
       <section className="product-includes">

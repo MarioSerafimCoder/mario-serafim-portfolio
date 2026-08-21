@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { buildBriefing, buildMailtoUrl, buildWhatsAppUrl } from "../data/contact.ts";
+import { getDefaultContactSheetMode } from "../components/projects/contact-sheet-mode.ts";
+import { commerceEnabled, isCommerceEnabled } from "../data/products.ts";
 
 async function render(path = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
@@ -66,4 +69,57 @@ test("mantém os painéis fechados fora da tela e sem interação", async () => 
   assert.match(css, /\.overlay-menu\.is-open\s*\{[^}]*visibility:visible[^}]*pointer-events:auto/s);
   assert.match(css, /body\s*\{[^}]*overflow-x:hidden/s);
   assert.match(css, /@media\s*\(max-width:760px\)/);
+});
+
+test("oculta a sacola enquanto o catálogo não possui produto disponível", async () => {
+  assert.equal(commerceEnabled, false);
+  assert.equal(isCommerceEnabled([{ status: "coming-soon" }, { status: "draft" }]), false);
+  assert.equal(isCommerceEnabled([{ status: "coming-soon" }, { status: "available" }]), true);
+
+  const home = await (await render("/")).text();
+  const product = await (await render("/shop/brand-presentation-system")).text();
+  assert.doesNotMatch(home, /Sacola \(/i);
+  assert.doesNotMatch(product, /Colocar na sacola|R\$ 79/i);
+  assert.match(product, /Disponibilidade[\s\S]*Em breve/i);
+});
+
+test("resolve o modo inicial da folha de contato por capacidade", () => {
+  assert.equal(getDefaultContactSheetMode(false), "grid");
+  assert.equal(getDefaultContactSheetMode(true), "index");
+});
+
+test("marca a seção ativa em rotas principais e filhas", async () => {
+  const work = await (await render("/work/granistone")).text();
+  const shop = await (await render("/shop/brand-presentation-system")).text();
+  assert.match(work, /href="\/work" aria-current="page"/);
+  assert.match(shop, /href="\/shop" aria-current="page"/);
+});
+
+test("gera briefing e URLs seguras com caracteres especiais", () => {
+  const briefing = buildBriefing({
+    name: "Mário & Ana",
+    email: "mario+projeto@example.com",
+    company: "Estúdio / Norte",
+    projectType: "Identidade de marca",
+    budget: "R$ 15 mil — 30 mil",
+    timeline: "São Paulo + Fortaleza",
+    message: "Criação & direção\nSistema A/B + lançamento",
+  });
+  assert.match(briefing, /Mário & Ana/);
+  assert.match(briefing, /Criação & direção\nSistema A\/B \+ lançamento/);
+
+  const mailto = buildMailtoUrl("contato@example.com", "Novo projeto — Mário & Ana", briefing);
+  const whatsapp = buildWhatsAppUrl(briefing);
+  assert.match(mailto, /^mailto:contato@example\.com\?subject=/);
+  assert.match(mailto, /%26|%2F|%2B|%0A/);
+  assert.match(whatsapp, /^https:\/\/wa\.me\/\?text=/);
+  assert.equal(decodeURIComponent(mailto.split("&body=")[1]), briefing);
+  assert.equal(decodeURIComponent(whatsapp.split("?text=")[1]), briefing);
+});
+
+test("centraliza o fechamento de overlays e restaura foco sem rolar", async () => {
+  const source = await readFile(new URL("../components/site-chrome.tsx", import.meta.url), "utf8");
+  assert.match(source, /const closeOverlay = useCallback/);
+  assert.match(source, /focus\(\{ preventScroll: true \}\)/);
+  assert.doesNotMatch(source.replace(/const closeOverlay[\s\S]*?\}, \[\]\);/, ""), /setOverlay\(null\)/);
 });

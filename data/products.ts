@@ -3,4 +3,6 @@ export const products: Product[] = [
   { id:"P01", slug:"brand-presentation-system", name:"Sistema de Apresentação de Marca", description:"Uma estrutura modular para contar histórias de marca com clareza e confiança.", category:"Modelos", price:79, currency:"BRL", status:"coming-soon", compatibility:["Figma","Keynote"], version:"1.0", fileType:"Modelo", license:"Pessoal / Comercial", tone:"tone-a", includes:["Estrutura de apresentação","Páginas modulares","Sistema visual editável","Notas de uso"] },
   { id:"P02", slug:"creative-review-toolkit", name:"Kit de Revisão Criativa", description:"Uma estrutura prática para revisões objetivas e decisões criativas melhores.", category:"Ferramentas", price:49, currency:"BRL", status:"coming-soon", compatibility:["PDF","Notion"], version:"1.0", fileType:"Kit digital", license:"Pessoal / Comercial", tone:"tone-c", includes:["Estrutura de revisão","Perguntas para feedback","Registro de decisões","Modelos de reunião"] },
 ];
+export const isCommerceEnabled = (catalog: Pick<Product, "status">[]) => catalog.some((product) => product.status === "available");
+export const commerceEnabled = isCommerceEnabled(products);
 export const getProduct = (slug:string) => products.find((product) => product.slug === slug);

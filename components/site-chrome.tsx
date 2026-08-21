@@ -1,7 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { commerceEnabled } from "../data/products";
 import { ArtboardSystem } from "./interaction/artboard-system";
 
 type BagItem = { slug: string; name: string; price: number };
@@ -16,6 +17,10 @@ const navigation = [
   { href: "/contact", label: "Contato" },
 ];
 
+function isNavigationActive(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [overlay, setOverlay] = useState<Overlay>(null);
@@ -25,12 +30,33 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const bagCloseRef = useRef<HTMLButtonElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const lastFocusRef = useRef<HTMLElement | null>(null);
+  const shouldRestoreFocusRef = useRef(false);
   const menuOpen = overlay === "menu";
-  const bagOpen = overlay === "bag";
+  const bagOpen = commerceEnabled && overlay === "bag";
+  const overlayOpen = overlay !== null;
   const headerOnDark = pathname === "/lab" || pathname === "/contact";
   const markSuffix = pathname.startsWith("/work") ? "W" : pathname === "/lab" ? "L" : pathname === "/about" ? "A" : pathname.startsWith("/shop") ? "S" : pathname === "/contact" ? "C" : pathname === "/archive" ? "R" : "";
 
+  const closeOverlay = useCallback(() => {
+    shouldRestoreFocusRef.current = true;
+    setOverlay(null);
+  }, []);
+
+  const openOverlay = useCallback((next: Exclude<Overlay, null>) => {
+    shouldRestoreFocusRef.current = false;
+    setOverlay((current) => {
+      if (current === null) lastFocusRef.current = document.activeElement as HTMLElement | null;
+      return next;
+    });
+  }, []);
+
+  const changeOverlay = useCallback((next: Overlay) => {
+    if (next === null) closeOverlay();
+    else openOverlay(next);
+  }, [closeOverlay, openOverlay]);
+
   useEffect(() => {
+    if (!commerceEnabled) return;
     let active = true;
     try {
       const stored = JSON.parse(localStorage.getItem("ms-bag") || "[]");
@@ -42,6 +68,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (!commerceEnabled) return;
     const add = (event: Event) => {
       const item = (event as CustomEvent<BagItem>).detail;
       setBag((current) => {
@@ -51,14 +78,13 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         localStorage.setItem("ms-bag", JSON.stringify(next));
         return next;
       });
-      setOverlay("bag");
+      openOverlay("bag");
     };
     window.addEventListener("ms:add-to-bag", add);
     return () => window.removeEventListener("ms:add-to-bag", add);
-  }, []);
+  }, [openOverlay]);
 
   useEffect(() => {
-    const overlayOpen = overlay !== null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = overlayOpen ? "hidden" : previousOverflow;
     document.body.classList.toggle("menu-active", menuOpen);
@@ -68,7 +94,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     if (overlay === "status") document.querySelector<HTMLElement>(".system-status button")?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setOverlay(null);
+        event.preventDefault();
+        closeOverlay();
+        return;
       }
       if (event.key === "Tab" && overlayOpen) {
         const panel = menuOpen
@@ -92,13 +120,18 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       document.body.classList.remove("menu-active");
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [bagOpen, menuOpen, overlay]);
+  }, [bagOpen, closeOverlay, menuOpen, overlay, overlayOpen]);
 
-  const openOverlay = (next: Overlay) => {
-    if (next) lastFocusRef.current = document.activeElement as HTMLElement | null;
-    setOverlay(next);
-    if (!next) queueMicrotask(() => lastFocusRef.current?.focus());
-  };
+  useEffect(() => {
+    if (overlay !== null || !shouldRestoreFocusRef.current) return;
+    const frame = requestAnimationFrame(() => {
+      if (!shouldRestoreFocusRef.current) return;
+      lastFocusRef.current?.focus({ preventScroll: true });
+      lastFocusRef.current = null;
+      shouldRestoreFocusRef.current = false;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [overlay]);
 
   useEffect(() => {
     let frame = 0;
@@ -151,17 +184,16 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <a className="skip-link" href="#main-content">Ir para o conteúdo</a>
       <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
-      <ArtboardSystem overlay={overlay} onOverlayChange={openOverlay} gridOpen={gridOpen} onGridChange={setGridOpen} />
+      <ArtboardSystem overlay={overlay} onOverlayChange={changeOverlay} gridOpen={gridOpen} onGridChange={setGridOpen} />
       <header className={`site-header persistent-header ${headerOnDark ? "header-on-dark" : ""}`}>
         <a href="/" className="mark" aria-label="Mário Serafim — Início" data-cursor="ABRIR">MS/{markSuffix}</a>
         <nav aria-label="Navegação principal">
-          <a href="/work">Projetos</a>
-          <a href="/lab">Laboratório</a>
-          <a href="/about">Sobre</a>
-          <a href="/shop">Loja</a>
+          {navigation.filter((item) => ["/work", "/lab", "/about", "/shop"].includes(item.href)).map((item) => (
+            <a key={item.href} href={item.href} aria-current={isNavigationActive(pathname, item.href) ? "page" : undefined}>{item.label}</a>
+          ))}
         </nav>
         <div className="header-actions">
-          <button className="bag-trigger" onClick={() => openOverlay("bag")} aria-label={`Abrir sacola com ${bag.length} itens`} data-cursor="ABRIR">Sacola ({bag.length})</button>
+          {commerceEnabled && <button className="bag-trigger" onClick={() => openOverlay("bag")} aria-label={`Abrir sacola com ${bag.length} itens`} data-cursor="ABRIR">Sacola ({bag.length})</button>}
           <button className="command-trigger" onClick={() => window.dispatchEvent(new Event("ms:command"))} aria-label="Abrir comandos">/</button>
           <button className="menu-trigger" onClick={() => openOverlay("menu")} aria-expanded={menuOpen} aria-controls="site-menu" data-cursor="ABRIR">Menu +</button>
         </div>
@@ -180,26 +212,26 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <div id="site-menu" className={`overlay-menu ${menuOpen ? "is-open" : ""}`} aria-hidden={!menuOpen} role="dialog" aria-modal="true" aria-label="Navegação do site">
         <div className="overlay-top">
           <span>MS/ Navegação</span>
-          <button ref={menuCloseRef} tabIndex={menuOpen ? 0 : -1} onClick={() => openOverlay(null)}>Fechar ×</button>
+          <button ref={menuCloseRef} tabIndex={menuOpen ? 0 : -1} onClick={closeOverlay}>Fechar ×</button>
         </div>
         <nav>
           {navigation.map((item, index) => (
-            <a key={item.href} href={item.href} tabIndex={menuOpen ? 0 : -1} onClick={() => openOverlay(null)} data-cursor="ABRIR">
+            <a key={item.href} href={item.href} tabIndex={menuOpen ? 0 : -1} onClick={closeOverlay} aria-current={isNavigationActive(pathname, item.href) ? "page" : undefined} data-cursor="ABRIR">
               <span>0{index + 1}</span>{item.label}
             </a>
           ))}
         </nav>
-        <div className="overlay-tools" aria-label="Utilitários">
-          <button tabIndex={menuOpen ? 0 : -1} onClick={() => openOverlay("bag")}>Sacola ({bag.length})</button>
-          <button tabIndex={menuOpen ? 0 : -1} aria-pressed={gridOpen} onClick={() => { setGridOpen(!gridOpen); openOverlay(null); }}>{gridOpen ? "Ocultar grade" : "Mostrar grade"}</button>
+        <div className={`overlay-tools ${commerceEnabled ? "" : "overlay-tools--single"}`} aria-label="Utilitários">
+          {commerceEnabled && <button tabIndex={menuOpen ? 0 : -1} onClick={() => openOverlay("bag")}>Sacola ({bag.length})</button>}
+          <button tabIndex={menuOpen ? 0 : -1} aria-pressed={gridOpen} onClick={() => { setGridOpen(!gridOpen); closeOverlay(); }}>{gridOpen ? "Ocultar grade" : "Mostrar grade"}</button>
         </div>
         <div className="overlay-bottom"><span>Fortaleza — Brasil</span><span>Disponível para projetos selecionados</span></div>
       </div>
 
-      <aside className={`bag-drawer ${bagOpen ? "is-open" : ""}`} aria-hidden={!bagOpen} role="dialog" aria-modal="true" aria-label="Sacola de compras">
+      {commerceEnabled && <aside className={`bag-drawer ${bagOpen ? "is-open" : ""}`} aria-hidden={!bagOpen} role="dialog" aria-modal="true" aria-label="Sacola de compras">
         <div className="drawer-head">
           <span>Sacola ({bag.length})</span>
-          <button ref={bagCloseRef} tabIndex={bagOpen ? 0 : -1} onClick={() => openOverlay(null)}>Fechar ×</button>
+          <button ref={bagCloseRef} tabIndex={bagOpen ? 0 : -1} onClick={closeOverlay}>Fechar ×</button>
         </div>
         {bag.length ? (
           <>
@@ -217,8 +249,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         ) : (
           <p className="empty-state">Sua sacola está vazia.</p>
         )}
-      </aside>
-      {(menuOpen || bagOpen) && <button className="backdrop" aria-label="Fechar painel" onClick={() => openOverlay(null)} />}
+      </aside>}
+      {(menuOpen || bagOpen) && <button className="backdrop" aria-label="Fechar painel" onClick={closeOverlay} />}
     </>
   );
 }

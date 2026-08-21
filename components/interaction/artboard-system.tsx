@@ -45,10 +45,6 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (isTyping(event.target)) return;
-      if (event.key === "Escape") {
-        onOverlayChange(null);
-        return;
-      }
       if (event.key === "/") {
         event.preventDefault();
         onOverlayChange(commandOpen ? null : "command");
