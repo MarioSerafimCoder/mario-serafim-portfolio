@@ -1,26 +1,41 @@
-# Mário Serafim — Portfolio MVP
+# Mário Serafim — Portfólio
 
-Editorial portfolio for creative direction, art direction, branding and digital experiences.
+Portfólio editorial de direção criativa, direção de arte, marcas e experiências digitais, com uma área de produtos digitais.
 
-## Development
+**Site público:** [mario-serafim-portfolio.mario-92.chatgpt.site](https://mario-serafim-portfolio.mario-92.chatgpt.site/)
 
-Requires Node.js 22. Install dependencies and run the development script defined in `package.json`. Run the production build before deployment.
+## Desenvolvimento
 
-## Content and assets
+Requer Node.js 22.
 
-- Project records live in `data/projects.ts`.
-- Product records live in `data/products.ts`.
-- Every gray image/video area is an intentional placeholder. Its label states the expected role or aspect ratio.
-- Add final assets under `public/projects/<slug>/` or `public/products/<slug>/`, then replace the matching placeholder with `next/image` or an accessible video element.
+```bash
+pnpm install
+pnpm dev
+```
 
-## Adding projects and products
+Para gerar a versão de produção:
 
-Add a project record to `data/projects.ts`; Work, Archive and the case route all use that source. Add products to `data/products.ts`. Products can remain `coming-soon` until files and checkout are ready. Never place paid downloads under `public`.
+```bash
+pnpm build
+```
 
-## Stripe — future phase
+## Conteúdo e mídia
 
-Copy `.env.example` to `.env.local` and add real values only when checkout is implemented. The current checkout and webhook endpoints intentionally return a demonstration response. Future paid downloads should use private storage and expiring signed URLs.
+- Os projetos são cadastrados em `data/projects.ts`.
+- Os produtos são cadastrados em `data/products.ts`.
+- As áreas em tons de cinza são espaços temporários para imagens e vídeos.
+- Os arquivos finais podem ser organizados em `public/projects/<slug>/` e `public/products/<slug>/`.
 
-## Deployment
+## Projetos e produtos
 
-The project is configured for OpenAI Sites and a Cloudflare-compatible build. If the production domain changes, update the base URL in `app/sitemap.ts` and `app/robots.ts`.
+Ao adicionar um projeto em `data/projects.ts`, o índice, o arquivo e a página de case são atualizados a partir da mesma fonte. Produtos podem permanecer com o status `coming-soon` até que os arquivos e o pagamento estejam prontos.
+
+Downloads pagos não devem ser armazenados diretamente na pasta `public`.
+
+## Pagamentos — etapa futura
+
+O catálogo e a sacola fazem parte do MVP. O checkout permanece desativado até a integração com Stripe. Use `.env.example` como referência e mantenha valores reais apenas no ambiente local ou nos segredos da hospedagem.
+
+## Publicação
+
+O projeto está configurado para OpenAI Sites e gera uma aplicação compatível com Cloudflare. Caso o domínio mude, atualize a URL base em `app/layout.tsx`, `app/sitemap.ts` e `app/robots.ts`.
