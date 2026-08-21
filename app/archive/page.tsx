@@ -23,7 +23,6 @@ export default function ArchivePage() {
           </a>
         ))}
       </section>
-      <section className="archive-note"><p>Nota do arquivo</p><h2>Novos trabalhos entrarão conforme o material for preparado.</h2><p>O índice é dinâmico: novos registros aparecem aqui automaticamente e recebem sua própria página de projeto.</p></section>
     </main>
   );
 }

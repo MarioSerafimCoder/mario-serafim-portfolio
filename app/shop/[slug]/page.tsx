@@ -11,8 +11,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${product.name} — Mário Serafim`,
     description: product.description,
-    openGraph: { title: `${product.name} — Mário Serafim`, description: product.description, images: ["/og.png"] },
-    twitter: { title: `${product.name} — Mário Serafim`, description: product.description, images: ["/og.png"] },
+    openGraph: { title: `${product.name} — Mário Serafim`, description: product.description, images: [] },
+    twitter: { title: `${product.name} — Mário Serafim`, description: product.description, images: [] },
   };
 }
 
@@ -23,8 +23,8 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <main className="product-page">
-      <div className={`product-main-cover ${product.tone}`} role="img" aria-label={`Espaço reservado para imagem principal de ${product.name}`}>
-        <span>{product.id} / {product.category}</span><strong>{product.name}</strong><small>Substituir por capa ou mockup do produto</small>
+      <div className={`product-main-cover ${product.tone}`} role="img" aria-label={`Composição abstrata em tons de cinza para ${product.name}`}>
+        <span>{product.id} / {product.category}</span><strong>{product.name}</strong><small>Edição digital</small>
       </div>
       <section className="product-info">
         <p>{product.category} / {product.status === "coming-soon" ? "em breve" : "disponível"}</p>
@@ -32,7 +32,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <p className="product-description">{product.description}</p>
         <div className="product-price">R$ {product.price}</div>
         <AddToBag item={{ slug: product.slug, name: product.name, price: product.price }} disabled={product.status !== "available"} />
-        <p className="checkout-note">Pagamento em breve. Nenhum pagamento ou pedido é criado nesta versão.</p>
+        <p className="checkout-note">Lançamento em breve.</p>
       </section>
 
       <section className="product-includes">
@@ -45,21 +45,13 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
         <div><span>Compatibilidade</span><p>{product.compatibility.join(" / ")}</p></div>
         <div><span>Versão</span><p>{product.version}</p></div>
         <div><span>Tipo de arquivo</span><p>{product.fileType}</p></div>
-        <div><span>Tamanho</span><p>{product.fileSize}</p></div>
-        <div><span>Atualização</span><p>{product.updatedAt}</p></div>
         <div><span>Licença</span><p>{product.license}<br /><a href="/license">Ver licença ↗</a></p></div>
       </section>
 
       <section className="case-gallery product-gallery" aria-label={`Espaços reservados para prévia de ${product.name}`}>
-        <div className="gallery-caption"><span>Prévia do produto</span><span>Maquetes em preparação</span></div>
-        <div className="gallery-placeholder wide">16:9 / Visão principal do produto</div>
-        <div className="gallery-split"><div className="gallery-placeholder square">1:1 / Detalhe da interface</div><div className="gallery-placeholder square">1:1 / Visão geral do sistema</div></div>
-      </section>
-
-      <section className="product-license-summary">
-        <p>Licença / Rascunho</p>
-        <h2>Use. Adapte.<br />Não redistribua.</h2>
-        <p>A licença final será revisada antes do início das vendas. <a href="/license">Ler o rascunho atual ↗</a></p>
+        <div className="gallery-caption"><span>Sistema do produto</span></div>
+        <div className="gallery-placeholder wide" aria-hidden="true" />
+        <div className="gallery-split"><div className="gallery-placeholder square" aria-hidden="true" /><div className="gallery-placeholder square" aria-hidden="true" /></div>
       </section>
 
       {related.length > 0 && <section className="related-products"><p>Produtos relacionados</p>{related.map((item) => <a key={item.slug} href={`/shop/${item.slug}`}><span>{item.category}</span><strong>{item.name}</strong><span>Ver produto ↗</span></a>)}</section>}

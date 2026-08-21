@@ -1,8 +1,17 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { projects } from "../../data/projects";
+
+type ArtboardOverlay = "command" | "status" | "menu" | "bag" | null;
+
+type ArtboardSystemProps = {
+  overlay: ArtboardOverlay;
+  onOverlayChange: (overlay: ArtboardOverlay) => void;
+  gridOpen: boolean;
+  onGridChange: (open: boolean) => void;
+};
 
 const commands = [
   { href: "/work", label: "Projetos selecionados", key: "W" },
@@ -18,34 +27,33 @@ function isTyping(target: EventTarget | null) {
   return !!element?.closest("input, textarea, select, [contenteditable='true']");
 }
 
-export function ArtboardSystem() {
+export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChange }: ArtboardSystemProps) {
   const pathname = usePathname();
-  const [gridOpen, setGridOpen] = useState(false);
-  const [commandOpen, setCommandOpen] = useState(false);
-  const [statusOpen, setStatusOpen] = useState(false);
+  const commandOpen = overlay === "command";
+  const statusOpen = overlay === "status";
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorLabelRef = useRef<HTMLSpanElement>(null);
   const commandRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const openCommand = () => setCommandOpen(true);
+    const openCommand = () => onOverlayChange("command");
     window.addEventListener("ms:command", openCommand);
     return () => window.removeEventListener("ms:command", openCommand);
-  }, []);
+  }, [onOverlayChange]);
 
   useEffect(() => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (isTyping(event.target)) return;
       if (event.key === "Escape") {
-        setCommandOpen(false);
-        setStatusOpen(false);
+        onOverlayChange(null);
         return;
       }
       if (event.key === "/") {
         event.preventDefault();
-        setCommandOpen((current) => !current);
+        onOverlayChange(commandOpen ? null : "command");
       }
-      if (event.key.toLowerCase() === "g") setGridOpen((current) => !current);
+      if (event.key.toLowerCase() === "g") onGridChange(!gridOpen);
       if (event.key.toLowerCase() === "l") window.location.assign("/lab");
       if (event.key.toLowerCase() === "r") {
         const project = projects[Math.floor(Math.random() * projects.length)];
@@ -54,30 +62,18 @@ export function ArtboardSystem() {
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+  }, [commandOpen, gridOpen, onGridChange, onOverlayChange]);
 
   useEffect(() => {
     if (!commandOpen) return;
     const panel = commandRef.current;
     const focusable = panel?.querySelectorAll<HTMLElement>("a, button");
     focusable?.[0]?.focus();
-    const trap = (event: KeyboardEvent) => {
-      if (event.key !== "Tab" || !focusable?.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-    document.addEventListener("keydown", trap);
-    return () => document.removeEventListener("keydown", trap);
+    return undefined;
   }, [commandOpen]);
 
   useEffect(() => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     let pointerFrame = 0;
     let pointerX = -100;
     let pointerY = -100;
@@ -106,6 +102,10 @@ export function ArtboardSystem() {
   }, []);
 
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      document.documentElement.style.setProperty("--scroll-velocity", "0");
+      return;
+    }
     let lastY = window.scrollY;
     let frame = 0;
     let resetTimer = 0;
@@ -127,10 +127,11 @@ export function ArtboardSystem() {
   }, [pathname]);
 
   useEffect(() => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
     const mark = document.querySelector<HTMLElement>(".mark");
     if (!mark) return;
     let timer = 0;
-    const start = () => { timer = window.setTimeout(() => setStatusOpen(true), 720); };
+    const start = () => { timer = window.setTimeout(() => onOverlayChange("status"), 720); };
     const cancel = () => window.clearTimeout(timer);
     mark.addEventListener("pointerdown", start);
     mark.addEventListener("pointerup", cancel);
@@ -141,7 +142,7 @@ export function ArtboardSystem() {
       mark.removeEventListener("pointerup", cancel);
       mark.removeEventListener("pointerleave", cancel);
     };
-  }, [pathname]);
+  }, [onOverlayChange, pathname]);
 
   return (
     <>
@@ -154,15 +155,15 @@ export function ArtboardSystem() {
         <i /><i /><i /><i /><span ref={cursorLabelRef}>+</span>
       </div>
 
-      <button className="grid-status" onClick={() => setGridOpen((current) => !current)} aria-pressed={gridOpen}>
+      <button className="grid-status" onClick={() => onGridChange(!gridOpen)} aria-pressed={gridOpen}>
         G / GRADE {gridOpen ? "ATIVA" : "OCULTA"}
       </button>
 
       <div className={`command-palette ${commandOpen ? "is-open" : ""}`} aria-hidden={!commandOpen}>
         <div className="command-panel" ref={commandRef} role="dialog" aria-modal="true" aria-label="Comandos do site">
-          <div className="command-head"><span>MS/ COMANDO</span><button onClick={() => setCommandOpen(false)}>Fechar ×</button></div>
+          <div className="command-head"><span>MS/ COMANDO</span><button tabIndex={commandOpen ? 0 : -1} onClick={() => onOverlayChange(null)}>Fechar ×</button></div>
           <nav>
-            {commands.map((item) => <a key={item.href} href={item.href}><kbd>{item.key}</kbd><span>{item.label}</span><b>↗</b></a>)}
+            {commands.map((item) => <a key={item.href} href={item.href} tabIndex={commandOpen ? 0 : -1}><kbd>{item.key}</kbd><span>{item.label}</span><b>↗</b></a>)}
           </nav>
           <div className="command-shortcuts"><span>G — Grade</span><span>R — Projeto aleatório</span><span>L — Laboratório</span><span>ESC — Fechar</span></div>
         </div>
@@ -170,7 +171,7 @@ export function ArtboardSystem() {
 
       <div className={`system-status ${statusOpen ? "is-open" : ""}`} aria-hidden={!statusOpen}>
         <div role="dialog" aria-modal="true" aria-label="Status do sistema MS">
-          <button onClick={() => setStatusOpen(false)}>Fechar ×</button>
+          <button tabIndex={statusOpen ? 0 : -1} onClick={() => onOverlayChange(null)}>Fechar ×</button>
           <strong>MS/<br />ESTADO DO SISTEMA</strong>
           <p>CRIATIVO ........ ATIVO<br />DIREÇÃO DE ARTE ... ATIVA<br />EXPERIMENTOS ..... EM CURSO<br />PRAZOS ........... SIGILOSOS</p>
         </div>

@@ -1,1 +1,0 @@
-export default function SuccessPage(){return <main className="status-page"><p>Loja / Status</p><h1>Compra<br/>concluída.</h1><p>Esta tela está preparada para uma futura compra verificada via Stripe. Nenhuma transação é simulada no MVP.</p><a href="/shop">Voltar à loja →</a></main>}

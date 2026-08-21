@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FrameCorners } from "../interaction/frame-corners";
 
 export function LabPlayground() {
@@ -10,10 +10,40 @@ export function LabPlayground() {
   const identityRef = useRef<HTMLDivElement>(null);
   const typeFrame = useRef(0);
   const identityFrame = useRef(0);
+  const coarsePointer = useRef(false);
+
+  useEffect(() => {
+    coarsePointer.current = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    const element = typeRef.current;
+    if (!coarsePointer.current || !element || !("IntersectionObserver" in window)) return;
+    let visible = false;
+    const update = () => {
+      if (!visible) return;
+      const rect = element.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+      if (typeFrame.current) cancelAnimationFrame(typeFrame.current);
+      typeFrame.current = requestAnimationFrame(() => {
+        element.style.setProperty("--type-x", progress.toFixed(3));
+        element.style.setProperty("--type-y", Math.sin(progress * Math.PI).toFixed(3));
+      });
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) update();
+    }, { rootMargin: "12% 0px", threshold: [0, 0.3, 0.7] });
+    observer.observe(element);
+    window.addEventListener("scroll", update, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", update);
+      if (typeFrame.current) cancelAnimationFrame(typeFrame.current);
+      if (identityFrame.current) cancelAnimationFrame(identityFrame.current);
+    };
+  }, []);
 
   const moveType = (event: ReactPointerEvent<HTMLDivElement>) => {
     const element = typeRef.current;
-    if (!element) return;
+    if (!element || coarsePointer.current) return;
     const rect = element.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width;
     const y = (event.clientY - rect.top) / rect.height;
@@ -28,26 +58,39 @@ export function LabPlayground() {
     const block = event.currentTarget;
     const startX = event.clientX;
     const startY = event.clientY;
-    block.setPointerCapture(event.pointerId);
-    block.classList.add("is-dragging");
+    const pointerId = event.pointerId;
+    let dragging = !coarsePointer.current;
+    if (dragging) {
+      block.setPointerCapture(pointerId);
+      block.classList.add("is-dragging");
+    }
     const move = (next: PointerEvent) => {
-      block.style.transform = `translate3d(${next.clientX - startX}px,${next.clientY - startY}px,0) rotate(${(next.clientX - startX) * 0.03}deg)`;
+      const deltaX = next.clientX - startX;
+      const deltaY = next.clientY - startY;
+      if (!dragging) {
+        if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 8) return end();
+        if (Math.abs(deltaX) < 8 || Math.abs(deltaX) < Math.abs(deltaY) * 1.1) return;
+        dragging = true;
+        block.setPointerCapture(pointerId);
+        block.classList.add("is-dragging");
+      }
+      block.style.transform = `translate3d(${deltaX}px,${deltaY}px,0) rotate(${deltaX * 0.03}deg)`;
     };
     const end = () => {
       block.classList.remove("is-dragging");
       block.style.transform = "";
-      block.removeEventListener("pointermove", move);
-      block.removeEventListener("pointerup", end);
-      block.removeEventListener("pointercancel", end);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", end);
+      window.removeEventListener("pointercancel", end);
     };
-    block.addEventListener("pointermove", move);
-    block.addEventListener("pointerup", end);
-    block.addEventListener("pointercancel", end);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
   };
 
   const moveIdentity = (event: ReactPointerEvent<HTMLDivElement>) => {
     const element = identityRef.current;
-    if (!element) return;
+    if (!element || coarsePointer.current) return;
     const rect = element.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
     const y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
@@ -58,11 +101,38 @@ export function LabPlayground() {
     });
   };
 
+  const dragIdentity = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const element = identityRef.current;
+    if (!element || !coarsePointer.current) return;
+    const startX = event.clientX;
+    const pointerId = event.pointerId;
+    event.currentTarget.setPointerCapture(pointerId);
+    element.classList.add("is-dragging");
+    const move = (next: PointerEvent) => {
+      const rect = element.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, (next.clientX - startX) / (rect.width * 0.35)));
+      if (identityFrame.current) cancelAnimationFrame(identityFrame.current);
+      identityFrame.current = requestAnimationFrame(() => {
+        element.style.setProperty("--identity-x", x.toFixed(3));
+        element.style.setProperty("--identity-y", "0");
+      });
+    };
+    const end = () => {
+      element.classList.remove("is-dragging");
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", end);
+      window.removeEventListener("pointercancel", end);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", end);
+    window.addEventListener("pointercancel", end);
+  };
+
   return (
     <section className="lab-playground" aria-label="Experimentos interativos do laboratório">
       <article className="lab-experiment type-field" ref={typeRef} onPointerMove={moveType} data-cursor="EXPANDIR">
-        <header><span>001</span><h2>CAMPO TIPOGRÁFICO</h2><small>Movimente o ponteiro</small></header>
-        <div className="type-field__canvas" aria-label="Tipografia que reage ao ponteiro"><strong>TIPO</strong><strong>GRAFIA</strong></div>
+        <header><span>001</span><h2>CAMPO TIPOGRÁFICO</h2><small><b className="pointer-copy">Movimente o ponteiro</b><b className="touch-copy">Role para interagir</b></small></header>
+        <div className="type-field__canvas" aria-label="Tipografia interativa"><strong>TIPO</strong><strong>GRAFIA</strong></div>
         <FrameCorners />
       </article>
 
@@ -86,8 +156,8 @@ export function LabPlayground() {
       </article>
 
       <article className="lab-experiment moving-identity" ref={identityRef} onPointerMove={moveIdentity} data-cursor="MOVER">
-        <header><span>004</span><h2>IDENTIDADE EM MOVIMENTO</h2><small>Direção e velocidade</small></header>
-        <div className="moving-identity__canvas" aria-label="Identidade MS responsiva ao ponteiro"><strong>MS/</strong><i /><i /><i /></div>
+        <header><span>004</span><h2>IDENTIDADE EM MOVIMENTO</h2><small><b className="pointer-copy">Movimente o ponteiro</b><b className="touch-copy">Arraste ↔</b></small></header>
+        <div className="moving-identity__canvas" onPointerDown={dragIdentity} aria-label="Identidade MS interativa"><strong>MS/</strong><i /><i /><i /></div>
         <FrameCorners />
       </article>
     </section>

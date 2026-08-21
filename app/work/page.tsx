@@ -13,7 +13,7 @@ export default function WorkPage() {
       <header className="page-hero work-hero">
         <p>01 / FOLHA DE CONTATO</p>
         <h1>Projetos.</h1>
-        <p>Quatro sistemas visuais em construção. Cada blank possui uma lógica própria e está pronto para receber o material final.</p>
+        <p>Quatro sistemas visuais com lógicas próprias de matéria, refração, divisão e organização.</p>
       </header>
 
       <section className="work-statement">
@@ -23,11 +23,6 @@ export default function WorkPage() {
       </section>
 
       <ContactSheet projects={projects} />
-
-      <section className="work-transition-note">
-        <span>TRANSIÇÃO / APRIMORAMENTO PROGRESSIVO</span>
-        <p>Selecione um projeto. Em navegadores compatíveis, o visual continua crescendo até se tornar o primeiro quadro da página.</p>
-      </section>
     </main>
   );
 }

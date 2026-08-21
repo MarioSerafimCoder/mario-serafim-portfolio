@@ -1,6 +1,6 @@
 import { HeroArtboard } from "../components/motion/hero-artboard";
 import { ExplodedComposition } from "../components/interaction/exploded-composition";
-import { ProjectVisual } from "../components/projects/project-visual";
+import { ProjectCard } from "../components/projects/project-card";
 import { projects } from "../data/projects";
 
 export default function Home() {
@@ -25,17 +25,12 @@ export default function Home() {
         <div className="section-head"><p className="eyebrow">02 / PROJETOS SELECIONADOS</p><a href="/work" data-cursor="ABRIR">Ver folha de contato ↗</a></div>
         <h2 id="selected-title">Projetos<br />como sistemas.</h2>
         <div className="project-grid">
-          {projects.map((project, index) => (
-            <a href={`/work/${project.slug}`} className={`project-card project-${index + 1}`} key={project.title} data-cursor="VER">
-              <ProjectVisual project={project} />
-              <div className="project-meta"><span>{project.id} / {project.title}</span><span>{project.categories[0]}</span><span>{project.year}</span></div>
-            </a>
-          ))}
+          {projects.map((project, index) => <ProjectCard project={project} index={index} key={project.slug} />)}
         </div>
       </section>
 
       <section className="art-direction-system">
-        <div className="section-head"><p className="eyebrow">03 / DIREÇÃO DE ARTE</p><span>Mova para desmontar</span></div>
+        <div className="section-head"><p className="eyebrow">03 / DIREÇÃO DE ARTE</p><span className="interaction-hint"><b>Movimente para desmontar</b><i>Role para revelar</i></span></div>
         <ExplodedComposition />
       </section>
 

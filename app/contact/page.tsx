@@ -3,10 +3,27 @@
 import { FormEvent, useState } from "react";
 
 export default function ContactPage() {
-  const [sent, setSent] = useState(false);
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const [status, setStatus] = useState("Preencha os campos para gerar um briefing curto.");
+  const [briefing, setBriefing] = useState("");
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSent(true);
+    const data = new FormData(event.currentTarget);
+    const text = [
+      `Nome: ${data.get("name")}`,
+      `Email: ${data.get("email")}`,
+      `Empresa / Estúdio: ${data.get("company") || "—"}`,
+      `Tipo de projeto: ${data.get("projectType")}`,
+      `Investimento: ${data.get("budget")}`,
+      `Prazo: ${data.get("timeline") || "—"}`,
+      `Mensagem: ${data.get("message")}`,
+    ].join("\n");
+    setBriefing(text);
+    try {
+      await navigator.clipboard.writeText(text);
+      setStatus("Briefing copiado. Agora você pode enviá-lo pelo canal de sua preferência.");
+    } catch {
+      setStatus("Copie o briefing abaixo e envie pelo canal de sua preferência.");
+    }
   };
   return (
     <main className="inner-page dark-page">
@@ -26,8 +43,9 @@ export default function ContactPage() {
         <label htmlFor="budget">Investimento<select id="budget" name="budget" required defaultValue=""><option value="" disabled>Selecione uma faixa</option><option>R$ 5 mil — 15 mil</option><option>R$ 15 mil — 30 mil</option><option>R$ 30 mil+</option><option>Ainda não definido</option></select></label>
         <label htmlFor="timeline">Prazo<input id="timeline" name="timeline" type="text" placeholder="Quando precisa ser lançado?" /></label>
         <label htmlFor="message">Mensagem<textarea id="message" name="message" rows={6} required /></label>
-        <button className="light-button" type="submit">Enviar contato →</button>
-        <p className="form-note" role="status" aria-live="polite">{sent ? "Contato registrado em modo de demonstração. O envio por e-mail será conectado antes do lançamento." : "Modo de demonstração — este formulário ainda não envia e-mail."}</p>
+        <button className="light-button" type="submit">Copiar briefing →</button>
+        <p className="form-note" role="status" aria-live="polite">{status}</p>
+        {briefing && <textarea className="briefing-output" readOnly value={briefing} aria-label="Briefing gerado" />}
       </form>
       <section className="contact-expectations">
         <p>O que acontece depois</p>

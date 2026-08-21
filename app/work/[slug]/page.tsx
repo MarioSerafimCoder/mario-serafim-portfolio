@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExplodedComposition } from "../../../components/interaction/exploded-composition";
+import { ChapterNavigation, type Chapter } from "../../../components/projects/chapter-navigation";
 import { ProjectVisual } from "../../../components/projects/project-visual";
 import { getProject, projects } from "../../../data/projects";
 
@@ -15,16 +16,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${project.title} — Mário Serafim`,
     description: project.description,
-    openGraph: { title: `${project.title} — Mário Serafim`, description: project.description, images: ["/og.png"] },
-    twitter: { title: `${project.title} — Mário Serafim`, description: project.description, images: ["/og.png"] },
+    openGraph: { title: `${project.title} — Mário Serafim`, description: project.description, images: [] },
+    twitter: { title: `${project.title} — Mário Serafim`, description: project.description, images: [] },
   };
 }
 
-const chapters = [
-  { number: "01", slug: "ideia", title: "Ideia", copy: "[Adicionar contexto, público, oportunidade e ponto de partida verificados do projeto.]" },
-  { number: "02", slug: "direcao", title: "Direção", copy: "[Adicionar as decisões criativas e o raciocínio por trás delas.]" },
-  { number: "03", slug: "sistema", title: "Sistema", copy: "[Adicionar tipografia, cor, imagem, composição e princípios de movimento.]" },
-  { number: "04", slug: "saida", title: "Saída", copy: "[Adicionar somente entregas e resultados efetivamente verificados.]" },
+const chapters: Chapter[] = [
+  { number: "01", slug: "ideia", title: "Ideia" },
+  { number: "02", slug: "direcao", title: "Direção" },
+  { number: "03", slug: "sistema", title: "Sistema" },
+  { number: "04", slug: "saida", title: "Saída" },
 ];
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -49,25 +50,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
       <section className="case-intro">
         <div><span>Papel</span><p>{project.role}</p></div>
-        <div><span>Cliente</span><p>{project.client}</p></div>
+        <div><span>Ano</span><p>{project.year}</p></div>
         <h2>{project.description}</h2>
       </section>
 
       <section className="case-overview">
         <p>Visão geral</p>
         <div><span>Disciplinas</span><p>{project.categories.join(" / ")}</p></div>
-        <div><span>Escopo</span><p>[Adicionar escopo verificado]</p></div>
-        <div><span>Colaboradores</span><p>[Adicionar créditos]</p></div>
-        <div><span>Resultado</span><p>[Adicionar apenas resultados verificados]</p></div>
+        <div><span>Direção</span><p>{project.role}</p></div>
       </section>
 
-      <nav className="case-chapter-nav" aria-label="Capítulos do projeto">
-        {chapters.map((chapter) => <a href={`#${chapter.slug}`} key={chapter.slug}><span>{chapter.number}</span>{chapter.title}</a>)}
-      </nav>
+      <ChapterNavigation chapters={chapters} />
 
-      {chapters.map((chapter) => (
+      {chapters.map((chapter, chapterIndex) => (
         <section className={`case-chapter case-chapter-${chapter.number}`} id={chapter.slug} key={chapter.title}>
-          <span>{chapter.number}</span><h2>{chapter.title}</h2><p>{chapter.copy}</p>
+          <span>{chapter.number}</span><h2>{chapter.title}</h2>
+          {chapterIndex === 0 && <p>{project.description}</p>}
+          {chapterIndex === 1 && <p>{project.role}</p>}
+          {chapterIndex === 2 && <p>{project.categories.join(" / ")}</p>}
+          {chapterIndex === 3 && <ProjectVisual project={project} context="preview" className="case-chapter-visual" />}
         </section>
       ))}
 
@@ -77,7 +78,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <section className="case-gallery" aria-label={`Estrutura visual do projeto ${project.title}`}>
-        <div className="gallery-caption"><span>Quadros do sistema</span><span>Prontos para mídia final</span></div>
+        <div className="gallery-caption"><span>Quadros do sistema</span></div>
         <ProjectVisual project={project} context="preview" className="gallery-visual gallery-visual-wide" />
         <div className="gallery-split">
           <ProjectVisual project={project} context="preview" className="gallery-visual gallery-visual-portrait" />
@@ -86,12 +87,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <ProjectVisual project={project} context="preview" className="gallery-visual gallery-visual-landscape" />
           </div>
         </div>
-      </section>
-
-      <section className="case-notes">
-        <p>Notas do projeto</p>
-        <h2>Cada espaço já está pronto para receber o material final.</h2>
-        <p>O componente aceita imagem, vídeo, pôster, sequência e futura animação vinculada à rolagem sem alterar a arquitetura editorial do projeto.</p>
       </section>
 
       <nav className="case-navigation" aria-label="Navegação entre projetos">

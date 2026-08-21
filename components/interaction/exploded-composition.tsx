@@ -8,6 +8,7 @@ export function ExplodedComposition() {
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     let frame = 0;
     let amount = 0;
     const render = () => {
@@ -23,12 +24,35 @@ export function ExplodedComposition() {
       amount = 0;
       if (!frame) frame = requestAnimationFrame(render);
     };
-    element.addEventListener("pointermove", move, { passive: true });
-    element.addEventListener("pointerleave", reset);
+    if (finePointer) {
+      element.addEventListener("pointermove", move, { passive: true });
+      element.addEventListener("pointerleave", reset);
+      return () => {
+        if (frame) cancelAnimationFrame(frame);
+        element.removeEventListener("pointermove", move);
+        element.removeEventListener("pointerleave", reset);
+      };
+    }
+
+    if (!("IntersectionObserver" in window)) return;
+    let visible = false;
+    const updateFromScroll = () => {
+      if (!visible) return;
+      const rect = element.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+      amount = Math.sin(progress * Math.PI);
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible) updateFromScroll();
+    }, { rootMargin: "12% 0px", threshold: [0, 0.25, 0.6] });
+    observer.observe(element);
+    window.addEventListener("scroll", updateFromScroll, { passive: true });
     return () => {
       if (frame) cancelAnimationFrame(frame);
-      element.removeEventListener("pointermove", move);
-      element.removeEventListener("pointerleave", reset);
+      observer.disconnect();
+      window.removeEventListener("scroll", updateFromScroll);
     };
   }, []);
 

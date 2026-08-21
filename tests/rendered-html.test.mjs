@@ -32,8 +32,8 @@ test("renderiza a página inicial em português", async () => {
 test("renderiza as principais páginas internas", async () => {
   const routes = [
     ["/work", /Da ideia/],
-    ["/work/granistone", /Cada espaço já está pronto/],
-    ["/archive", /Nota do arquivo/],
+    ["/work/granistone", /matéria, peso e ritmo arquitetônico/],
+    ["/archive", /Um registro em expansão/],
     ["/lab", /Testar rápido/],
     ["/about", /Direção não é decoração/],
     ["/shop", /Princípios da coleção/],

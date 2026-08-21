@@ -12,7 +12,7 @@ export default function AboutPage() {
       <section className="about-intro">
         <h2>Mário Serafim</h2>
         <p>Diretor Criativo / Diretor de Arte<br />Fortaleza — Brasil</p>
-        <p>Atuo entre identidade, campanhas e produtos digitais, conectando ideias a sistemas visuais claros. Uma biografia profissional completa e verificada será adicionada antes do lançamento final.</p>
+        <p>Atuo entre identidade, campanhas e produtos digitais, conectando ideias a sistemas visuais claros, consistentes e memoráveis.</p>
       </section>
       <section className="about-philosophy">
         <p>Ponto de vista</p>
@@ -21,10 +21,6 @@ export default function AboutPage() {
       </section>
       <section className="about-exploded"><p>Como eu penso</p><ExplodedComposition /></section>
       <section className="capabilities"><p>Áreas de atuação</p>{capabilities.map((item, index) => <div key={item}><span>0{index + 1}</span><strong>{item}</strong></div>)}</section>
-      <section className="about-record">
-        <p>Trajetória profissional</p>
-        {["Experiência", "Clientes selecionados", "Ferramentas", "Reconhecimento"].map((item) => <div key={item}><h3>{item}</h3><p>[Adicionar informação verificada]</p></div>)}
-      </section>
       <section className="about-contact"><p>Disponível para projetos e colaborações selecionados.</p><h2>Tem uma ideia<br />que precisa de direção?</h2><a href="/contact">Iniciar um projeto ↗</a></section>
     </main>
   );
