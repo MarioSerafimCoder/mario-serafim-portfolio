@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ExplodedComposition } from "../../../components/interaction/exploded-composition";
+import { ProjectVisual } from "../../../components/projects/project-visual";
 import { getProject, projects } from "../../../data/projects";
 
 export function generateStaticParams() {
@@ -13,16 +15,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${project.title} — Mário Serafim`,
     description: project.description,
-    openGraph: { title: `${project.title} — Mário Serafim`, description: project.description, images: [] },
-    twitter: { title: `${project.title} — Mário Serafim`, description: project.description, images: [] },
+    openGraph: { title: `${project.title} — Mário Serafim`, description: project.description, images: ["/og.png"] },
+    twitter: { title: `${project.title} — Mário Serafim`, description: project.description, images: ["/og.png"] },
   };
 }
 
 const chapters = [
-  { number: "01", title: "Contexto", copy: "[Adicionar contexto, público e momento verificados do projeto.]" },
-  { number: "02", title: "Desafio", copy: "[Adicionar o desafio criativo ou de negócio central.]" },
-  { number: "03", title: "Direção", copy: "[Adicionar as decisões criativas e o raciocínio por trás delas.]" },
-  { number: "04", title: "Sistema visual", copy: "[Adicionar detalhes de tipografia, cor, imagem, composição e movimento.]" },
+  { number: "01", slug: "ideia", title: "Ideia", copy: "[Adicionar contexto, público, oportunidade e ponto de partida verificados do projeto.]" },
+  { number: "02", slug: "direcao", title: "Direção", copy: "[Adicionar as decisões criativas e o raciocínio por trás delas.]" },
+  { number: "03", slug: "sistema", title: "Sistema", copy: "[Adicionar tipografia, cor, imagem, composição e princípios de movimento.]" },
+  { number: "04", slug: "saida", title: "Saída", copy: "[Adicionar somente entregas e resultados efetivamente verificados.]" },
 ];
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -42,11 +44,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           <span>{project.year}</span>
         </div>
         <h1>{project.title}</h1>
-        <div className={`case-cover media-placeholder ${project.tone}`} role="img" aria-label={`Espaço reservado para imagem principal de ${project.title}`}>
-          <span>{project.id} / Visual principal</span>
-          <strong>{project.title}</strong>
-          <span>Substituir por imagem ou vídeo 16:9</span>
-        </div>
+        <ProjectVisual project={project} context="hero" className="case-cover" />
       </header>
 
       <section className="case-intro">
@@ -63,29 +61,37 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <div><span>Resultado</span><p>[Adicionar apenas resultados verificados]</p></div>
       </section>
 
+      <nav className="case-chapter-nav" aria-label="Capítulos do projeto">
+        {chapters.map((chapter) => <a href={`#${chapter.slug}`} key={chapter.slug}><span>{chapter.number}</span>{chapter.title}</a>)}
+      </nav>
+
       {chapters.map((chapter) => (
-        <section className="case-chapter" key={chapter.title}>
+        <section className={`case-chapter case-chapter-${chapter.number}`} id={chapter.slug} key={chapter.title}>
           <span>{chapter.number}</span><h2>{chapter.title}</h2><p>{chapter.copy}</p>
         </section>
       ))}
 
-      <section className="case-gallery" aria-label={`Espaços reservados para galeria de ${project.title}`}>
-        <div className="gallery-caption"><span>Quadros selecionados</span><span>Material em preparação</span></div>
-        <div className="gallery-placeholder wide">16:9 / Filme ou visual-chave</div>
+      <section className="case-exploded">
+        <p>Direção / Sistema desmontado</p>
+        <ExplodedComposition />
+      </section>
+
+      <section className="case-gallery" aria-label={`Estrutura visual do projeto ${project.title}`}>
+        <div className="gallery-caption"><span>Quadros do sistema</span><span>Prontos para mídia final</span></div>
+        <ProjectVisual project={project} context="preview" className="gallery-visual gallery-visual-wide" />
         <div className="gallery-split">
-          <div className="gallery-placeholder portrait">3:4 / Quadro editorial</div>
+          <ProjectVisual project={project} context="preview" className="gallery-visual gallery-visual-portrait" />
           <div className="gallery-stack">
-            <div className="gallery-placeholder square">1:1 / Detalhe do sistema</div>
-            <div className="gallery-placeholder landscape">4:3 / Aplicação</div>
+            <ProjectVisual project={project} context="preview" className="gallery-visual gallery-visual-square" />
+            <ProjectVisual project={project} context="preview" className="gallery-visual gallery-visual-landscape" />
           </div>
         </div>
-        <div className="gallery-placeholder cinematic">21:9 / Sequência em movimento</div>
       </section>
 
       <section className="case-notes">
         <p>Notas do projeto</p>
         <h2>Cada espaço já está pronto para receber o material final.</h2>
-        <p>As composições em cinza preservam ritmo e proporção; imagens e vídeos podem ser substituídos depois sem redesenhar o case.</p>
+        <p>O componente aceita imagem, vídeo, pôster, sequência e futura animação vinculada à rolagem sem alterar a arquitetura editorial do projeto.</p>
       </section>
 
       <nav className="case-navigation" aria-label="Navegação entre projetos">

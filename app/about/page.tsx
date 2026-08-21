@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { ExplodedComposition } from "../../components/interaction/exploded-composition";
 
 export const metadata: Metadata = { title: "Sobre — Mário Serafim", description: "Mário Serafim é Diretor Criativo e Diretor de Arte em Fortaleza, Brasil." };
 
-const capabilities = ["Direção criativa", "Direção de arte", "Sistemas de marca", "Campanhas", "Produtos digitais", "Design visual", "Motion", "Estratégia criativa"];
+const capabilities = ["Direção criativa", "Direção de arte", "Sistemas de marca", "Campanhas", "Produtos digitais", "Design visual", "Movimento", "Estratégia criativa"];
 
 export default function AboutPage() {
   return (
     <main className="inner-page">
-      <header className="about-hero"><p>04 / Sobre</p><h1>Direção<br />criativa<br /><em>é uma forma</em><br />de pensar.</h1></header>
+      <header className="about-hero about-artboard"><p>04 / SOBRE</p><h1>Mário<br />Serafim<br /><em>dirige sistemas</em><br />visuais.</h1><div className="about-tags" aria-label="Disciplinas"><span>DIREÇÃO CRIATIVA</span><span>DIREÇÃO DE ARTE</span><span>SISTEMAS DE MARCA</span><span>DIGITAL</span><span>MOVIMENTO</span><span>CAMPANHAS</span><span>FORTALEZA — BRASIL</span></div></header>
       <section className="about-intro">
         <h2>Mário Serafim</h2>
         <p>Diretor Criativo / Diretor de Arte<br />Fortaleza — Brasil</p>
@@ -18,6 +19,7 @@ export default function AboutPage() {
         <h2>Deixar claro.<br />Tornar memorável.<br /><em>Fazer tudo conversar.</em></h2>
         <p>Direção não é decoração. É o conjunto de decisões que dá forma, tom, ritmo e consistência a uma ideia.</p>
       </section>
+      <section className="about-exploded"><p>Como eu penso</p><ExplodedComposition /></section>
       <section className="capabilities"><p>Áreas de atuação</p>{capabilities.map((item, index) => <div key={item}><span>0{index + 1}</span><strong>{item}</strong></div>)}</section>
       <section className="about-record">
         <p>Trajetória profissional</p>

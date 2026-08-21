@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ContactSheet } from "../../components/projects/contact-sheet";
 import { projects } from "../../data/projects";
 
 export const metadata: Metadata = {
@@ -8,49 +9,24 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   return (
-    <main className="inner-page">
+    <main className="inner-page work-page">
       <header className="page-hero work-hero">
-        <p>01 / Projetos selecionados</p>
+        <p>01 / FOLHA DE CONTATO</p>
         <h1>Projetos.</h1>
-        <p>Identidades, campanhas e experiências digitais transformadas em universos visuais coerentes.</p>
+        <p>Quatro sistemas visuais em construção. Cada blank possui uma lógica própria e está pronto para receber o material final.</p>
       </header>
 
       <section className="work-statement">
         <p>Abordagem / 2026</p>
         <h2>Da ideia<br />ao sistema.</h2>
-        <p>Direção é o fio que conecta estratégia, imagem, tipografia, movimento e produto. Cada case funciona como uma publicação editorial concisa.</p>
+        <p>Direção é o fio que conecta estratégia, imagem, tipografia, movimento e produto. Cada projeto funciona como uma publicação editorial concisa.</p>
       </section>
 
-      <section className="work-editorial" aria-label="Projetos selecionados">
-        {projects.map((project, index) => (
-          <article className={`editorial-project editorial-project-${index + 1}`} key={project.slug}>
-            <a href={`/work/${project.slug}`} className="editorial-project-link">
-              <div className={`media-placeholder editorial-cover ${project.tone}`} role="img" aria-label={`Espaço reservado para capa de ${project.title}`}>
-                <span className="placeholder-index">{project.id}</span>
-                <strong>{project.title}</strong>
-                <span>Imagem ou vídeo de capa em preparação</span>
-              </div>
-              <div className="editorial-project-meta">
-                <span>Projeto / {project.id}</span>
-                <h2>{project.title}</h2>
-                <p>{project.categories.join(" · ")}</p>
-                <span>{project.year} ↗</span>
-              </div>
-            </a>
-          </article>
-        ))}
-      </section>
+      <ContactSheet projects={projects} />
 
-      <section className="work-index">
-        <div className="section-head"><p className="eyebrow">Índice / Todos os projetos</p><a href="/archive">Abrir arquivo ↗</a></div>
-        {projects.map((project) => (
-          <a href={`/work/${project.slug}`} key={project.slug} className="work-row">
-            <span>{project.id}</span>
-            <div><h2>{project.title}</h2><p>{project.categories.join(" / ")}</p></div>
-            <span>{project.year}</span>
-            <span className="row-action">Ver case ↗</span>
-          </a>
-        ))}
+      <section className="work-transition-note">
+        <span>TRANSIÇÃO / APRIMORAMENTO PROGRESSIVO</span>
+        <p>Selecione um projeto. Em navegadores compatíveis, o visual continua crescendo até se tornar o primeiro quadro da página.</p>
       </section>
     </main>
   );

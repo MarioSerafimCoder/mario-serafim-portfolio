@@ -22,8 +22,10 @@ test("renderiza a página inicial em português", async () => {
   const html = await response.text();
   assert.match(html, /<html[^>]*lang="pt-BR"/i);
   assert.match(html, /<title>Mário Serafim — Diretor Criativo &amp; Diretor de Arte<\/title>/i);
-  assert.match(html, /Boas ideias precisam/);
-  assert.match(html, /Projetos selecionados/);
+  assert.match(html, /Boas ideias[\s\S]*precisam/);
+  assert.match(html, /Projetos selecionados/i);
+  assert.match(html, /PRANCHA VIVA/i);
+  assert.match(html, /Ver folha de contato/i);
   assert.doesNotMatch(html, /Your site is taking shape|Building your site/);
 });
 
@@ -44,6 +46,18 @@ test("renderiza as principais páginas internas", async () => {
     assert.equal(response.status, 200, path);
     assert.match(await response.text(), expected, path);
   }
+});
+
+test("expõe os novos sistemas editoriais em português", async () => {
+  const work = await (await render("/work")).text();
+  const lab = await (await render("/lab")).text();
+  const about = await (await render("/about")).text();
+
+  assert.match(work, /Folha de contato/i);
+  assert.match(work, /Grade/);
+  assert.match(lab, /Máquina de grade/i);
+  assert.match(about, /Movimento/);
+  assert.doesNotMatch(`${work}${lab}${about}`, /contact sheet|selected work|view all work|creative direction|motion graphics/i);
 });
 
 test("mantém os painéis fechados fora da tela e sem interação", async () => {

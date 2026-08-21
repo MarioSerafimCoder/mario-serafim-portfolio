@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ArtboardSystem } from "./interaction/artboard-system";
 
 type BagItem = { slug: string; name: string; price: number };
 
@@ -23,6 +24,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const bagCloseRef = useRef<HTMLButtonElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const headerOnDark = pathname === "/lab" || pathname === "/contact";
+  const markSuffix = pathname.startsWith("/work") ? "W" : pathname === "/lab" ? "L" : pathname === "/about" ? "A" : pathname.startsWith("/shop") ? "S" : pathname === "/contact" ? "C" : pathname === "/archive" ? "R" : "";
 
   useEffect(() => {
     let active = true;
@@ -55,6 +57,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     const overlayOpen = menuOpen || bagOpen;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = overlayOpen ? "hidden" : previousOverflow;
+    document.body.classList.toggle("menu-active", menuOpen);
     if (menuOpen) menuCloseRef.current?.focus();
     if (bagOpen) bagCloseRef.current?.focus();
     const onKeyDown = (event: KeyboardEvent) => {
@@ -62,10 +65,20 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         setMenuOpen(false);
         setBagOpen(false);
       }
+      if (event.key === "Tab" && overlayOpen) {
+        const panel = menuOpen ? document.getElementById("site-menu") : document.querySelector<HTMLElement>(".bag-drawer");
+        const focusable = panel?.querySelectorAll<HTMLElement>("a, button:not(:disabled), input, select, textarea");
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.body.classList.remove("menu-active");
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [menuOpen, bagOpen]);
@@ -121,8 +134,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     <>
       <a className="skip-link" href="#main-content">Ir para o conteúdo</a>
       <div ref={progressRef} className="scroll-progress" aria-hidden="true" />
+      <ArtboardSystem />
       <header className={`site-header persistent-header ${headerOnDark ? "header-on-dark" : ""}`}>
-        <a href="/" className="mark" aria-label="Mário Serafim — Início">MS/</a>
+        <a href="/" className="mark" aria-label="Mário Serafim — Início" data-cursor="ABRIR">MS/{markSuffix}</a>
         <nav aria-label="Navegação principal">
           <a href="/work">Projetos</a>
           <a href="/lab">Laboratório</a>
@@ -130,8 +144,9 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <a href="/shop">Loja</a>
         </nav>
         <div className="header-actions">
-          <button onClick={() => setBagOpen(true)} aria-label={`Abrir sacola com ${bag.length} itens`}>Sacola ({bag.length})</button>
-          <button onClick={() => setMenuOpen(true)} aria-expanded={menuOpen} aria-controls="site-menu">Menu +</button>
+          <button onClick={() => setBagOpen(true)} aria-label={`Abrir sacola com ${bag.length} itens`} data-cursor="ABRIR">Sacola ({bag.length})</button>
+          <button className="command-trigger" onClick={() => window.dispatchEvent(new Event("ms:command"))} aria-label="Abrir comandos">/</button>
+          <button onClick={() => setMenuOpen(true)} aria-expanded={menuOpen} aria-controls="site-menu" data-cursor="ABRIR">Menu +</button>
         </div>
       </header>
 
@@ -152,7 +167,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         </div>
         <nav>
           {navigation.map((item, index) => (
-            <a key={item.href} href={item.href} tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)}>
+            <a key={item.href} href={item.href} tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)} data-cursor="ABRIR">
               <span>0{index + 1}</span>{item.label}
             </a>
           ))}

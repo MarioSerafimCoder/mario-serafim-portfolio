@@ -11,8 +11,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${product.name} — Mário Serafim`,
     description: product.description,
-    openGraph: { title: `${product.name} — Mário Serafim`, description: product.description, images: [] },
-    twitter: { title: `${product.name} — Mário Serafim`, description: product.description, images: [] },
+    openGraph: { title: `${product.name} — Mário Serafim`, description: product.description, images: ["/og.png"] },
+    twitter: { title: `${product.name} — Mário Serafim`, description: product.description, images: ["/og.png"] },
   };
 }
 
@@ -51,7 +51,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </section>
 
       <section className="case-gallery product-gallery" aria-label={`Espaços reservados para prévia de ${product.name}`}>
-        <div className="gallery-caption"><span>Prévia do produto</span><span>Mockups em preparação</span></div>
+        <div className="gallery-caption"><span>Prévia do produto</span><span>Maquetes em preparação</span></div>
         <div className="gallery-placeholder wide">16:9 / Visão principal do produto</div>
         <div className="gallery-split"><div className="gallery-placeholder square">1:1 / Detalhe da interface</div><div className="gallery-placeholder square">1:1 / Visão geral do sistema</div></div>
       </section>

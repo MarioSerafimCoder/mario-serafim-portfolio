@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { products } from "../../data/products";
 import { NewsletterForm } from "../../components/newsletter-form";
+import { FrameCorners } from "../../components/interaction/frame-corners";
 
 export const metadata: Metadata = { title: "Loja — Mário Serafim", description: "Produtos digitais para o trabalho criativo." };
 
@@ -19,14 +20,15 @@ export default function ShopPage() {
         <p>Cada produto terá documentação, versão e licença claras. Nenhuma compra é processada enquanto a coleção estiver marcada como “em breve”.</p>
       </section>
 
-      <div className="shop-filters" aria-label="Categorias de produtos">Todos · Templates · Mockups · Recursos · Ferramentas · Guias</div>
+      <div className="shop-filters" aria-label="Categorias de produtos">Todos · Modelos · Maquetes · Recursos · Ferramentas · Guias</div>
       <section className="product-grid" aria-label="Produtos em breve">
         {products.map((product) => (
-          <a href={`/shop/${product.slug}`} key={product.slug} className="product-card">
+          <a href={`/shop/${product.slug}`} key={product.slug} className="product-card" data-cursor="VER">
             <div className={`product-cover ${product.tone}`} role="img" aria-label={`Espaço reservado para capa de ${product.name}`}>
               <span>{product.id} / {product.category}</span>
               <strong>{product.name}</strong>
-              <small>Capa do produto em preparação</small>
+              <small>Sistema de produto / Prévia</small>
+              <FrameCorners />
             </div>
             <div><span>{product.name}</span><span>{product.status === "coming-soon" ? "Em breve" : `R$ ${product.price}`}</span></div>
           </a>
