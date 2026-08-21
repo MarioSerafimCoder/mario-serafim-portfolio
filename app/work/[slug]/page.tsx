@@ -19,10 +19,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const chapters = [
-  { number: "01", title: "Context", copy: "[Add the verified project context, audience and moment.]" },
-  { number: "02", title: "Challenge", copy: "[Add the central creative or business challenge.]" },
-  { number: "03", title: "Direction", copy: "[Add the creative decisions and the thinking behind them.]" },
-  { number: "04", title: "Visual system", copy: "[Add typography, color, image, composition and motion details.]" },
+  { number: "01", title: "Contexto", copy: "[Adicionar contexto, público e momento verificados do projeto.]" },
+  { number: "02", title: "Desafio", copy: "[Adicionar o desafio criativo ou de negócio central.]" },
+  { number: "03", title: "Direção", copy: "[Adicionar as decisões criativas e o raciocínio por trás delas.]" },
+  { number: "04", title: "Sistema visual", copy: "[Adicionar detalhes de tipografia, cor, imagem, composição e movimento.]" },
 ];
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -37,30 +37,30 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     <main className="case-page" style={caseStyle}>
       <header className="case-hero">
         <div className="case-labels">
-          <span>Project / {project.id}</span>
+          <span>Projeto / {project.id}</span>
           <span>{project.categories.join(" · ")}</span>
           <span>{project.year}</span>
         </div>
         <h1>{project.title}</h1>
-        <div className={`case-cover media-placeholder ${project.tone}`} role="img" aria-label={`${project.title} main visual placeholder`}>
-          <span>{project.id} / Hero visual</span>
+        <div className={`case-cover media-placeholder ${project.tone}`} role="img" aria-label={`Espaço reservado para imagem principal de ${project.title}`}>
+          <span>{project.id} / Visual principal</span>
           <strong>{project.title}</strong>
-          <span>Replace with 16:9 image or video</span>
+          <span>Substituir por imagem ou vídeo 16:9</span>
         </div>
       </header>
 
       <section className="case-intro">
-        <div><span>Role</span><p>{project.role}</p></div>
-        <div><span>Client</span><p>{project.client}</p></div>
+        <div><span>Papel</span><p>{project.role}</p></div>
+        <div><span>Cliente</span><p>{project.client}</p></div>
         <h2>{project.description}</h2>
       </section>
 
       <section className="case-overview">
-        <p>Case overview</p>
-        <div><span>Disciplines</span><p>{project.categories.join(" / ")}</p></div>
-        <div><span>Scope</span><p>[Add verified scope]</p></div>
-        <div><span>Collaborators</span><p>[Add credits]</p></div>
-        <div><span>Outcome</span><p>[Add only verified outcomes]</p></div>
+        <p>Visão geral</p>
+        <div><span>Disciplinas</span><p>{project.categories.join(" / ")}</p></div>
+        <div><span>Escopo</span><p>[Adicionar escopo verificado]</p></div>
+        <div><span>Colaboradores</span><p>[Adicionar créditos]</p></div>
+        <div><span>Resultado</span><p>[Adicionar apenas resultados verificados]</p></div>
       </section>
 
       {chapters.map((chapter) => (
@@ -69,28 +69,28 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </section>
       ))}
 
-      <section className="case-gallery" aria-label={`${project.title} gallery placeholders`}>
-        <div className="gallery-caption"><span>Selected frames</span><span>Material pending</span></div>
-        <div className="gallery-placeholder wide">16:9 / Film or key visual</div>
+      <section className="case-gallery" aria-label={`Espaços reservados para galeria de ${project.title}`}>
+        <div className="gallery-caption"><span>Quadros selecionados</span><span>Material em preparação</span></div>
+        <div className="gallery-placeholder wide">16:9 / Filme ou visual-chave</div>
         <div className="gallery-split">
-          <div className="gallery-placeholder portrait">3:4 / Editorial frame</div>
+          <div className="gallery-placeholder portrait">3:4 / Quadro editorial</div>
           <div className="gallery-stack">
-            <div className="gallery-placeholder square">1:1 / System detail</div>
-            <div className="gallery-placeholder landscape">4:3 / Application</div>
+            <div className="gallery-placeholder square">1:1 / Detalhe do sistema</div>
+            <div className="gallery-placeholder landscape">4:3 / Aplicação</div>
           </div>
         </div>
-        <div className="gallery-placeholder cinematic">21:9 / Motion sequence</div>
+        <div className="gallery-placeholder cinematic">21:9 / Sequência em movimento</div>
       </section>
 
       <section className="case-notes">
-        <p>Project notes</p>
-        <h2>Every asset slot is ready for the final material.</h2>
-        <p>The gray compositions preserve rhythm and proportion now; images and videos can be replaced later without redesigning the case.</p>
+        <p>Notas do projeto</p>
+        <h2>Cada espaço já está pronto para receber o material final.</h2>
+        <p>As composições em cinza preservam ritmo e proporção; imagens e vídeos podem ser substituídos depois sem redesenhar o case.</p>
       </section>
 
-      <nav className="case-navigation" aria-label="Project navigation">
-        <a href={`/work/${previous.slug}`}><span>Previous project</span><strong>{previous.title}</strong></a>
-        <a href={`/work/${next.slug}`}><span>Next project</span><strong>{next.title}</strong></a>
+      <nav className="case-navigation" aria-label="Navegação entre projetos">
+        <a href={`/work/${previous.slug}`}><span>Projeto anterior</span><strong>{previous.title}</strong></a>
+        <a href={`/work/${next.slug}`}><span>Próximo projeto</span><strong>{next.title}</strong></a>
       </nav>
     </main>
   );

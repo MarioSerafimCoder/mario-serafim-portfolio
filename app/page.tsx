@@ -1,32 +1,28 @@
-const projects = [
-  { title: "Granistone", type: "Brand Direction", year: "2026", tone: "tone-a" },
-  { title: "Queen Aquamarine", type: "Visual Identity", year: "2025", tone: "tone-b" },
-  { title: "Fenda", type: "Campaign / Digital", year: "2025", tone: "tone-c" },
-];
+import { projects } from "../data/projects";
 
 export default function Home() {
   return (
     <main>
       <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-kicker"><span>Creative / Art Direction</span><span>Fortaleza — Brazil</span><span>2026</span></div>
+        <div className="hero-kicker"><span>Direção Criativa / Direção de Arte</span><span>Fortaleza — Brasil</span><span>2026</span></div>
         <h1 id="hero-title"><span>Mário</span><span>Serafim</span></h1>
-        <div className="hero-foot"><p>Visual systems for<br />ideas worth remembering.</p><span className="scroll-note">Scroll to explore ↓</span></div>
+        <div className="hero-foot"><p>Sistemas visuais para<br />ideias que merecem ser lembradas.</p><span className="scroll-note">Role para explorar ↓</span></div>
       </section>
       <section className="manifesto">
-        <p className="eyebrow">01 / Direction</p>
-        <h2>Good ideas need<br /><em>direction.</em></h2>
-        <p className="manifesto-copy">I shape brands, campaigns and digital experiences into clear, memorable visual systems.</p>
+        <p className="eyebrow">01 / Direção</p>
+        <h2>Boas ideias precisam<br /><em>de direção.</em></h2>
+        <p className="manifesto-copy">Transformo marcas, campanhas e experiências digitais em sistemas visuais claros e memoráveis.</p>
       </section>
       <section className="selected" aria-labelledby="selected-title">
-        <div className="section-head"><p className="eyebrow">02 / Selected work</p><a href="/work">View all work ↗</a></div>
-        <h2 id="selected-title">Selected<br />work.</h2>
+        <div className="section-head"><p className="eyebrow">02 / Projetos selecionados</p><a href="/work">Ver todos ↗</a></div>
+        <h2 id="selected-title">Projetos<br />selecionados.</h2>
         <div className="project-grid">
-          {projects.map((project, index) => (
-            <a href={`/work/${project.title.toLowerCase().replaceAll(" ", "-")}`} className={`project-card project-${index + 1}`} key={project.title}>
-              <div className={`media-placeholder ${project.tone}`} role="img" aria-label={`${project.title} project image placeholder`}>
-                <span className="placeholder-index">0{index + 1}</span><strong>{project.title}</strong><span>Visual material pending</span>
+          {projects.filter((project) => project.featured).slice(0, 3).map((project, index) => (
+            <a href={`/work/${project.slug}`} className={`project-card project-${index + 1}`} key={project.title}>
+              <div className={`media-placeholder ${project.tone}`} role="img" aria-label={`Espaço reservado para imagem do projeto ${project.title}`}>
+                <span className="placeholder-index">0{index + 1}</span><strong>{project.title}</strong><span>Material visual em preparação</span>
               </div>
-              <div className="project-meta"><span>{project.title}</span><span>{project.type}</span><span>{project.year}</span></div>
+              <div className="project-meta"><span>{project.title}</span><span>{project.categories[0]}</span><span>{project.year}</span></div>
             </a>
           ))}
         </div>

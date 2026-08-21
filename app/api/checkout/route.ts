@@ -1,1 +1,1 @@
-export async function POST(){return Response.json({message:"Checkout coming soon."},{status:503})}
+export async function POST(){return Response.json({message:"Pagamento em breve."},{status:503})}

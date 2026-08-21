@@ -1,27 +1,27 @@
 import type { Metadata } from "next";
 import { projects } from "../../data/projects";
 
-export const metadata: Metadata = { title: "Archive — Mário Serafim", description: "An expanding index of creative direction and design work." };
+export const metadata: Metadata = { title: "Arquivo — Mário Serafim", description: "Um índice em expansão de direção criativa e design." };
 
 export default function ArchivePage() {
   const disciplines = [...new Set(projects.flatMap((project) => project.categories))];
   return (
     <main className="inner-page">
-      <header className="page-hero compact archive-hero"><p>02 / Index</p><h1>Archive.</h1><p>An expanding record of client, collaborative and self-initiated work.</p></header>
+      <header className="page-hero compact archive-hero"><p>02 / Índice</p><h1>Arquivo.</h1><p>Um registro em expansão de trabalhos para clientes, colaborações e iniciativas autorais.</p></header>
       <section className="archive-summary">
-        <div><span>Projects</span><strong>{String(projects.length).padStart(2, "0")}</strong></div>
-        <div><span>Years</span><strong>2024—26</strong></div>
-        <div><span>Disciplines</span><strong>{String(disciplines.length).padStart(2, "0")}</strong></div>
+        <div><span>Projetos</span><strong>{String(projects.length).padStart(2, "0")}</strong></div>
+        <div><span>Anos</span><strong>2024—26</strong></div>
+        <div><span>Disciplinas</span><strong>{String(disciplines.length).padStart(2, "0")}</strong></div>
       </section>
-      <section className="archive-table" aria-label="Project archive">
-        <div className="archive-head"><span>No.</span><span>Project</span><span>Discipline</span><span>Year</span></div>
+      <section className="archive-table" aria-label="Arquivo de projetos">
+        <div className="archive-head"><span>Nº</span><span>Projeto</span><span>Disciplina</span><span>Ano</span></div>
         {projects.map((project) => (
           <a href={`/work/${project.slug}`} key={project.slug}>
             <span>{project.id}</span><strong>{project.title}</strong><span>{project.categories[0]}</span><span>{project.year}</span>
           </a>
         ))}
       </section>
-      <section className="archive-note"><p>Archive note</p><h2>More work will be added as material is prepared.</h2><p>The index is data-driven: new records automatically appear here and receive their own case route.</p></section>
+      <section className="archive-note"><p>Nota do arquivo</p><h2>Novos trabalhos entrarão conforme o material for preparado.</h2><p>O índice é dinâmico: novos registros aparecem aqui automaticamente e recebem sua própria página de case.</p></section>
     </main>
   );
 }

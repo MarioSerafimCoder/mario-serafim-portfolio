@@ -1,1 +1,1 @@
-export default function Terms(){return <main className="legal-page"><p>Legal / Draft</p><h1>Terms.</h1><h2>Review required before publication.</h2><p>[Add reviewed terms for portfolio use, digital products, payment, delivery and refunds.]</p></main>}
+export default function Terms(){return <main className="legal-page"><p>Legal / Rascunho</p><h1>Termos.</h1><h2>Revisão necessária antes da publicação.</h2><p>[Adicionar termos revisados sobre uso do portfólio, produtos digitais, pagamento, entrega e reembolsos.]</p></main>}

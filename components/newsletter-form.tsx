@@ -13,9 +13,9 @@ export function NewsletterForm() {
       <form onSubmit={onSubmit}>
         <label htmlFor="newsletter">Email</label>
         <input id="newsletter" name="email" type="email" placeholder="you@email.com" required />
-        <button type="submit">Subscribe →</button>
+        <button type="submit">Quero receber →</button>
       </form>
-      <small aria-live="polite">{submitted ? "Thank you. Signup is in demonstration mode for now." : "Interface preview only. Newsletter delivery will be connected before launch."}</small>
+      <small aria-live="polite">{submitted ? "Obrigado. O cadastro está em modo de demonstração por enquanto." : "Prévia de interface: o envio da newsletter será conectado antes do lançamento."}</small>
     </>
   );
 }
