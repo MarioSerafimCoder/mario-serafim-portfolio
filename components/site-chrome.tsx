@@ -16,6 +16,7 @@ const navigation = [
   { href: "/shop", label: "Loja" },
   { href: "/contact", label: "Contato" },
 ];
+const visibleNavigation = navigation.filter((item) => commerceEnabled || item.href !== "/shop");
 
 function isNavigationActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -188,7 +189,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <header className={`site-header persistent-header ${headerOnDark ? "header-on-dark" : ""}`}>
         <a href="/" className="mark" aria-label="Mário Serafim — Início" data-cursor="ABRIR">MS/{markSuffix}</a>
         <nav aria-label="Navegação principal">
-          {navigation.filter((item) => ["/work", "/lab", "/about", "/shop"].includes(item.href)).map((item) => (
+          {visibleNavigation.filter((item) => ["/work", "/lab", "/about", "/shop"].includes(item.href)).map((item) => (
             <a key={item.href} href={item.href} aria-current={isNavigationActive(pathname, item.href) ? "page" : undefined}>{item.label}</a>
           ))}
         </nav>
@@ -215,7 +216,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           <button ref={menuCloseRef} tabIndex={menuOpen ? 0 : -1} onClick={closeOverlay}>Fechar ×</button>
         </div>
         <nav>
-          {navigation.map((item, index) => (
+          {visibleNavigation.map((item, index) => (
             <a key={item.href} href={item.href} tabIndex={menuOpen ? 0 : -1} onClick={closeOverlay} aria-current={isNavigationActive(pathname, item.href) ? "page" : undefined} data-cursor="ABRIR">
               <span>0{index + 1}</span>{item.label}
             </a>

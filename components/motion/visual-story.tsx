@@ -98,18 +98,18 @@ export function VisualStory() {
     const el = root.current;
     if (!el) return;
     const top = el.getBoundingClientRect().top + scrollY;
-    const progress = [0.08, 0.48, 0.78][index];
+    const progress = [0.08, 0.32, 0.58, 0.82][index];
     scrollTo({ top: top + (el.offsetHeight - innerHeight) * progress, behavior: "instant" });
   };
 
   return (
-    <section ref={root} id="visual-story" className="visual-story" data-scene={scene} data-reduced={reduced} aria-label="Da matéria ao sistema">
+    <section ref={root} id="visual-story" className="visual-story" data-scene={scene} data-reduced={reduced} aria-label="Da ideia à experiência">
       <div className="story-stage">
         <div className="story-media" aria-hidden="true">
           <img src={storyChapters[scene].poster} alt="" width="1280" height="720" fetchPriority="high" className="story-poster" />
           {!reduced && <video ref={video} className={ready ? "is-ready" : ""} src={mediaUrl} poster="/media/narrative/matter.webp" muted playsInline preload="auto" tabIndex={-1} onLoadedData={() => setReady(true)} onSeeked={seekNext} onError={() => setReady(false)} />}
         </div>
-        <div className="story-topline"><span>MS/ — Matéria, direção, sistema</span><div><button onClick={() => setReduced(true)}>Reduzir movimento</button><a href="#selected-title">Ir aos projetos ↗</a></div></div>
+        <div className="story-topline"><span>MS/ — Tese visual</span><div><button onClick={() => setReduced(true)}>Reduzir movimento</button><a href="#selected-title">Ir aos projetos ↗</a></div></div>
         <div className="story-captions" aria-hidden="true">
           {storyChapters.map((chapter, index) => (
             <div className="story-caption" data-active={scene === index} key={chapter.id}>

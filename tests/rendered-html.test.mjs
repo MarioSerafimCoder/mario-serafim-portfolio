@@ -27,7 +27,9 @@ test("renderiza a página inicial em português", async () => {
   assert.match(html, /<title>Mário Serafim — Diretor Criativo &amp; Diretor de Arte<\/title>/i);
   assert.match(html, /Boas ideias[\s\S]*precisam/);
   assert.match(html, /Projetos selecionados/i);
-  assert.match(html, /Da matéria ao sistema/i);
+  assert.match(html, /Showreel de direção de arte/i);
+  assert.match(html, /Da ideia à experiência/i);
+  assert.match(html, /Controle precisa[\s\S]*de descoberta/i);
   assert.match(html, /Ver folha de contato/i);
   assert.doesNotMatch(html, /Your site is taking shape|Building your site/);
 });
@@ -79,6 +81,7 @@ test("oculta a sacola enquanto o catálogo não possui produto disponível", asy
   const home = await (await render("/")).text();
   const product = await (await render("/shop/brand-presentation-system")).text();
   assert.doesNotMatch(home, /Sacola \(/i);
+  assert.doesNotMatch(home, /href="\/shop"/i);
   assert.doesNotMatch(product, /Colocar na sacola|R\$ 79/i);
   assert.match(product, /Disponibilidade[\s\S]*Em breve/i);
 });
@@ -92,7 +95,7 @@ test("marca a seção ativa em rotas principais e filhas", async () => {
   const work = await (await render("/work/granistone")).text();
   const shop = await (await render("/shop/brand-presentation-system")).text();
   assert.match(work, /href="\/work" aria-current="page"/);
-  assert.match(shop, /href="\/shop" aria-current="page"/);
+  assert.doesNotMatch(shop, /href="\/shop" aria-current="page"/);
 });
 
 test("gera briefing e URLs seguras com caracteres especiais", () => {

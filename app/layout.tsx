@@ -4,6 +4,7 @@ import "./globals.css";
 import "./refinement.css";
 import "./editorial.css";
 import "./narrative.css";
+import "./experience.css";
 import { SiteChrome } from "../components/site-chrome";
 
 const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });

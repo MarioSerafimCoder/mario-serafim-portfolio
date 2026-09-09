@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { projects } from "../../data/projects";
+import { commerceEnabled } from "../../data/products";
 
 type ArtboardOverlay = "command" | "status" | "menu" | "bag" | null;
 
@@ -21,6 +22,7 @@ const commands = [
   { href: "/shop", label: "Loja", key: "O" },
   { href: "/contact", label: "Contato", key: "C" },
 ];
+const visibleCommands = commands.filter((item) => commerceEnabled || item.href !== "/shop");
 
 function isTyping(target: EventTarget | null) {
   const element = target as HTMLElement | null;
@@ -159,7 +161,7 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
         <div className="command-panel" ref={commandRef} role="dialog" aria-modal="true" aria-label="Comandos do site">
           <div className="command-head"><span>MS/ COMANDO</span><button tabIndex={commandOpen ? 0 : -1} onClick={() => onOverlayChange(null)}>Fechar ×</button></div>
           <nav>
-            {commands.map((item) => <a key={item.href} href={item.href} tabIndex={commandOpen ? 0 : -1}><kbd>{item.key}</kbd><span>{item.label}</span><b>↗</b></a>)}
+            {visibleCommands.map((item) => <a key={item.href} href={item.href} tabIndex={commandOpen ? 0 : -1}><kbd>{item.key}</kbd><span>{item.label}</span><b>↗</b></a>)}
           </nav>
           <div className="command-shortcuts"><span>G — Grade</span><span>R — Projeto aleatório</span><span>L — Laboratório</span><span>ESC — Fechar</span></div>
         </div>
