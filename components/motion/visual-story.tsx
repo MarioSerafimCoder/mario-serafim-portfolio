@@ -12,6 +12,31 @@ export function VisualStory() {
   const [ready, setReady] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [loadMedia, setLoadMedia] = useState(false);
+  const [mediaUrl, setMediaUrl] = useState<string>();
+
+  useEffect(() => {
+    if (!loadMedia || reduced) return;
+    const controller = new AbortController();
+    let objectUrl: string | undefined;
+    // A complete local blob remains seekable when the host does not serve byte ranges.
+    fetch("/media/narrative/direction-film.mp4", { signal: controller.signal })
+      .then(response => {
+        if (!response.ok) throw new Error("Video unavailable");
+        return response.blob();
+      })
+      .then(blob => {
+        if (controller.signal.aborted) return;
+        objectUrl = URL.createObjectURL(blob);
+        setMediaUrl(objectUrl);
+      })
+      .catch(() => setReady(false));
+    return () => {
+      controller.abort();
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      setMediaUrl(undefined);
+      setReady(false);
+    };
+  }, [loadMedia, reduced]);
 
   useEffect(() => {
     const media = matchMedia("(prefers-reduced-motion: reduce)");
@@ -82,7 +107,7 @@ export function VisualStory() {
       <div className="story-stage">
         <div className="story-media" aria-hidden="true">
           <img src={storyChapters[scene].poster} alt="" width="1280" height="720" fetchPriority="high" className="story-poster" />
-          {!reduced && <video ref={video} className={ready ? "is-ready" : ""} src={loadMedia ? "/media/narrative/direction-film.mp4" : undefined} poster="/media/narrative/matter.webp" muted playsInline preload="metadata" tabIndex={-1} onLoadedData={() => setReady(true)} onSeeked={seekNext} onError={() => setReady(false)} />}
+          {!reduced && <video ref={video} className={ready ? "is-ready" : ""} src={mediaUrl} poster="/media/narrative/matter.webp" muted playsInline preload="auto" tabIndex={-1} onLoadedData={() => setReady(true)} onSeeked={seekNext} onError={() => setReady(false)} />}
         </div>
         <div className="story-topline"><span>MS/ — Matéria, direção, sistema</span><div><button onClick={() => setReduced(true)}>Reduzir movimento</button><a href="#selected-title">Ir aos projetos ↗</a></div></div>
         <div className="story-captions" aria-hidden="true">
