@@ -155,7 +155,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>("#main-content main > section:not(.selected), #main-content main > header, .editorial-home .project-card"));
+    const elements = Array.from(document.querySelectorAll<HTMLElement>("#main-content main > section:not(.selected):not(.visual-story), #main-content main > header, .editorial-home .project-card"));
     if (!("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -254,4 +254,5 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     </>
   );
 }
+
 
