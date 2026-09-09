@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./refinement.css";
+import "./editorial.css";
 import { SiteChrome } from "../components/site-chrome";
 
 const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
@@ -39,3 +40,4 @@ export default function RootLayout({
     </html>
   );
 }
+

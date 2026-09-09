@@ -28,7 +28,7 @@ function subscribeToContactSheetMode(update: () => void) {
   };
 }
 
-const getServerContactSheetMode = () => null;
+const getServerContactSheetMode = (): ContactSheetMode => "grid";
 
 export function ContactSheet({ projects }: { projects: Project[] }) {
   const mode = useSyncExternalStore(subscribeToContactSheetMode, readContactSheetMode, getServerContactSheetMode);
@@ -59,7 +59,7 @@ export function ContactSheet({ projects }: { projects: Project[] }) {
     return () => observer.disconnect();
   }, [mode]);
 
-  if (mode === null) return null;
+
 
   return (
     <section className={`contact-sheet contact-sheet--${mode}`} aria-labelledby="contact-sheet-title">
@@ -113,3 +113,4 @@ export function ContactSheet({ projects }: { projects: Project[] }) {
     </section>
   );
 }
+

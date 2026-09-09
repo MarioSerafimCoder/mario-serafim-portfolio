@@ -16,13 +16,13 @@ export default function WorkPage() {
         <p>Quatro sistemas visuais com lógicas próprias de matéria, refração, divisão e organização.</p>
       </header>
 
+      <ContactSheet projects={projects} />
       <section className="work-statement">
         <p>Abordagem / 2026</p>
         <h2>Da ideia<br />ao sistema.</h2>
         <p>Direção é o fio que conecta estratégia, imagem, tipografia, movimento e produto. Cada projeto funciona como uma publicação editorial concisa.</p>
       </section>
-
-      <ContactSheet projects={projects} />
     </main>
   );
 }
+

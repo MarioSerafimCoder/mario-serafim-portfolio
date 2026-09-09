@@ -31,6 +31,8 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         <span>{project.categories[0]}</span>
         <span>{project.year}</span>
       </div>
+      <p className="project-editorial-description">{project.description}<span aria-hidden="true">↗</span></p>
     </a>
   );
 }
+

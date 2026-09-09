@@ -155,7 +155,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>("#main-content main > section, #main-content main > header"));
+    const elements = Array.from(document.querySelectorAll<HTMLElement>("#main-content main > section:not(.selected), #main-content main > header, .editorial-home .project-card"));
     if (!("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -164,7 +164,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
           observer.unobserve(entry.target);
         }
       });
-    }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+    }, { rootMargin: "0px 0px -8%", threshold: 0 });
     elements.forEach((element, index) => {
       element.classList.add("reveal-section");
       if (index === 0 || element.getBoundingClientRect().top < window.innerHeight) element.classList.add("is-visible");
@@ -254,3 +254,4 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     </>
   );
 }
+

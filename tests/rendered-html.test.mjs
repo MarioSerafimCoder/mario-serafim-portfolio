@@ -27,7 +27,7 @@ test("renderiza a página inicial em português", async () => {
   assert.match(html, /<title>Mário Serafim — Diretor Criativo &amp; Diretor de Arte<\/title>/i);
   assert.match(html, /Boas ideias[\s\S]*precisam/);
   assert.match(html, /Projetos selecionados/i);
-  assert.match(html, /PRANCHA VIVA/i);
+  assert.match(html, /Ver projeto Granistone/i);
   assert.match(html, /Ver folha de contato/i);
   assert.doesNotMatch(html, /Your site is taking shape|Building your site/);
 });
@@ -123,3 +123,4 @@ test("centraliza o fechamento de overlays e restaura foco sem rolar", async () =
   assert.match(source, /focus\(\{ preventScroll: true \}\)/);
   assert.doesNotMatch(source.replace(/const closeOverlay[\s\S]*?\}, \[\]\);/, ""), /setOverlay\(null\)/);
 });
+
