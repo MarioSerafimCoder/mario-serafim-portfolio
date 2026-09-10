@@ -1,1 +1,1 @@
-import type { MetadataRoute } from "next"; export default function robots():MetadataRoute.Robots{return {rules:{userAgent:"*",allow:"/"},sitemap:"https://mario-serafim-portfolio.mario-92.chatgpt.site/sitemap.xml"}}
+import type { MetadataRoute } from "next"; export default function robots():MetadataRoute.Robots{return {rules:{userAgent:"*",allow:"/",disallow:["/shop","/archive"]},sitemap:"https://mario-serafim-portfolio.mario-92.chatgpt.site/sitemap.xml"}}

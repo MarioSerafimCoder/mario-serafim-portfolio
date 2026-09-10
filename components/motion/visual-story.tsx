@@ -103,7 +103,7 @@ export function VisualStory() {
   };
 
   return (
-    <section ref={root} id="visual-story" className="visual-story" data-scene={scene} data-reduced={reduced} aria-label="Da ideia à experiência">
+    <section ref={root} id="visual-story" className="visual-story" data-scene={scene} data-reduced={reduced} aria-label="Da matéria à experiência">
       <div className="story-stage">
         <div className="story-media" aria-hidden="true">
           <img src={storyChapters[scene].poster} alt="" width="1280" height="720" fetchPriority="high" className="story-poster" />
@@ -122,7 +122,7 @@ export function VisualStory() {
         </ol>
         <div className="story-bottom">
           <nav aria-label="Cenas da narrativa">{storyChapters.map((chapter,index) => <button key={chapter.id} onClick={() => goToScene(index)} aria-current={scene === index ? "step" : undefined}><span>{chapter.number}</span> {chapter.label}</button>)}</nav>
-          <span className="story-scroll-note">Role para dar direção ↓</span>
+          <span className="story-scroll-note">Role para acompanhar a sequência ↓</span>
           <span className="story-credit">Estudo visual autoral · IA</span>
         </div>
         <div className="story-progress" aria-hidden="true"><span /></div>

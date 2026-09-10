@@ -24,11 +24,13 @@ test("renderiza a página inicial em português", async () => {
 
   const html = await response.text();
   assert.match(html, /<html[^>]*lang="pt-BR"/i);
-  assert.match(html, /<title>Mário Serafim — Diretor Criativo &amp; Diretor de Arte<\/title>/i);
+  assert.match(html, /<title>Mário Serafim — Creative Director \/ Art Director<\/title>/i);
   assert.match(html, /Boas ideias[\s\S]*precisam/);
   assert.match(html, /Projetos selecionados/i);
-  assert.match(html, /Showreel de direção de arte/i);
-  assert.match(html, /Da ideia à experiência/i);
+  assert.match(html, /Showreel de Mário Serafim/i);
+  assert.match(html, /Da matéria à experiência/i);
+  assert.match(html, /Creative \/ Art Direction at Granistone A Rocha/i);
+  assert.match(html, /Outside the grid/i);
   assert.match(html, /Controle precisa[\s\S]*de descoberta/i);
   assert.match(html, /Ver folha de contato/i);
   assert.doesNotMatch(html, /Your site is taking shape|Building your site/);
@@ -36,11 +38,11 @@ test("renderiza a página inicial em português", async () => {
 
 test("renderiza as principais páginas internas", async () => {
   const routes = [
-    ["/work", /Da ideia/],
-    ["/work/granistone", /matéria, peso e ritmo arquitetônico/],
+    ["/work", /Da matéria/],
+    ["/work/granistone", /Granistone[\s\S]*matéria/i],
     ["/archive", /Um registro em expansão/],
     ["/lab", /Testar rápido/],
-    ["/about", /Direção não é decoração/],
+    ["/about", /Mário,[\s\S]*em contexto/],
     ["/shop", /Princípios da coleção/],
     ["/shop/brand-presentation-system", /O que está incluído/],
     ["/contact", /O que acontece depois/],
@@ -53,7 +55,7 @@ test("renderiza as principais páginas internas", async () => {
   }
 });
 
-test("expõe os novos sistemas editoriais em português", async () => {
+test("expõe a narrativa profissional e os sistemas editoriais", async () => {
   const work = await (await render("/work")).text();
   const lab = await (await render("/lab")).text();
   const about = await (await render("/about")).text();
@@ -61,8 +63,11 @@ test("expõe os novos sistemas editoriais em português", async () => {
   assert.match(work, /Folha de contato/i);
   assert.match(work, /Grade/);
   assert.match(lab, /Máquina de grade/i);
-  assert.match(about, /Movimento/);
-  assert.doesNotMatch(`${work}${lab}${about}`, /contact sheet|selected work|view all work|creative direction|motion graphics/i);
+  assert.match(about, /Granistone A Rocha/);
+  assert.match(about, /UX Design para desenvolvedores/);
+  assert.match(about, /Centro Universitário Belas Artes/);
+  assert.match(lab, /MS\/LAB é onde testo ferramentas/);
+  assert.doesNotMatch(`${work}${lab}${about}`, /Your site is taking shape|Building your site/i);
 });
 
 test("mantém os painéis fechados fora da tela e sem interação", async () => {

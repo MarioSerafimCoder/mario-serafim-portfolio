@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { projects } from "../../data/projects";
-import { commerceEnabled } from "../../data/products";
 
 type ArtboardOverlay = "command" | "status" | "menu" | "bag" | null;
 
@@ -15,14 +14,13 @@ type ArtboardSystemProps = {
 };
 
 const commands = [
-  { href: "/work", label: "Projetos selecionados", key: "W" },
-  { href: "/archive", label: "Arquivo", key: "A" },
-  { href: "/lab", label: "Laboratório", key: "L" },
-  { href: "/about", label: "Sobre", key: "S" },
-  { href: "/shop", label: "Loja", key: "O" },
-  { href: "/contact", label: "Contato", key: "C" },
+  { href: "/work", label: "Work / Projetos selecionados", key: "W" },
+  { href: "/#now", label: "Now / 2026", key: "N" },
+  { href: "/lab", label: "Lab / Experimentos", key: "L" },
+  { href: "/about", label: "About / Mário", key: "A" },
+  { href: "/contact", label: "Contact", key: "C" },
 ];
-const visibleCommands = commands.filter((item) => commerceEnabled || item.href !== "/shop");
+const visibleCommands = commands;
 
 function isTyping(target: EventTarget | null) {
   const element = target as HTMLElement | null;

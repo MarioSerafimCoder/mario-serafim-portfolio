@@ -7,26 +7,32 @@ import "./narrative.css";
 import "./experience.css";
 import { SiteChrome } from "../components/site-chrome";
 
+const siteUrl = "https://mario-serafim-portfolio.mario-92.chatgpt.site";
+
 const geistSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mario-serafim-portfolio.mario-92.chatgpt.site"),
-  title: "Mário Serafim — Diretor Criativo & Diretor de Arte",
-  description: "Direção criativa, direção de arte, marcas e experiências digitais.",
+  metadataBase: new URL(siteUrl),
+  title: { default: "Mário Serafim — Creative Director / Art Director", template: "%s" },
+  description: "Portfólio de Mário Serafim, Creative Director e Art Director em Fortaleza. Marcas, campanhas, produtos digitais, imagem e movimento.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
   },
   openGraph: {
-    title: "Mário Serafim — Diretor Criativo & Diretor de Arte",
-    description: "Direção criativa, direção de arte, marcas e experiências digitais.",
+    title: "Mário Serafim — Creative Director / Art Director",
+    description: "Marcas, campanhas, produtos digitais, imagem e movimento por Mário Serafim, em Fortaleza.",
+    url: siteUrl,
+    siteName: "Mário Serafim",
+    locale: "pt_BR",
+    type: "website",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: "Mário Serafim — Direção Criativa / Direção de Arte" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mário Serafim — Diretor Criativo & Diretor de Arte",
-    description: "Direção criativa, direção de arte, marcas e experiências digitais.",
+    title: "Mário Serafim — Creative Director / Art Director",
+    description: "Marcas, campanhas, produtos digitais, imagem e movimento por Mário Serafim, em Fortaleza.",
     images: ["/og.png"],
   },
 };
@@ -38,7 +44,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}><SiteChrome>{children}</SiteChrome></body>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Mário Serafim",
+          url: siteUrl,
+          jobTitle: ["Creative Director", "Art Director"],
+          homeLocation: { "@type": "Place", name: "Fortaleza, Brazil" },
+          worksFor: { "@type": "Organization", name: "Granistone A Rocha" },
+          sameAs: ["https://www.linkedin.com/in/marioserafim/", "https://www.behance.net/mario-serafim"],
+        }) }} />
+        <SiteChrome>{children}</SiteChrome>
+      </body>
     </html>
   );
 }

@@ -49,12 +49,12 @@ export default function ContactPage() {
   return (
     <main className="inner-page dark-page">
       <header className="contact-hero">
-        <p>06 / Contato</p><h1>Vamos<br />conversar.</h1><p>Tem um projeto que precisa de direção?<br />Compartilhe o essencial.</p>
+        <p>06 / Contato</p><h1>Vamos<br />conversar.</h1><p>Tem um projeto em curso?<br />Compartilhe o essencial.</p>
       </header>
       <section className="contact-intro">
         <p>Antes de escrever</p>
         <h2>Contexto ajuda.</h2>
-        <p>Conte o que está criando, em que momento o projeto está e qual tipo de direção seria útil. Curto e direto funciona muito bem.</p>
+        <p>Conte o que está criando, em que momento o projeto está e qual decisão precisa ser tomada. Curto e direto funciona muito bem.</p>
       </section>
       <form className="contact-form" onSubmit={submit}>
         <label htmlFor="name">Nome<input id="name" name="name" type="text" autoComplete="name" required /></label>
@@ -83,7 +83,7 @@ export default function ContactPage() {
         <p>O que acontece depois</p>
         <div><span>01</span><strong>Aderência</strong><p>Revisão do contexto e do escopo.</p></div>
         <div><span>02</span><strong>Conversa</strong><p>Alinhamento de objetivos, prazo e modelo de trabalho.</p></div>
-        <div><span>03</span><strong>Direção</strong><p>Definição do caminho criativo certo.</p></div>
+        <div><span>03</span><strong>Próximo passo</strong><p>Acordo sobre o caminho criativo.</p></div>
       </section>
     </main>
   );

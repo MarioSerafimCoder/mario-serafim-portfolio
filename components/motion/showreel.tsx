@@ -26,14 +26,14 @@ export function Showreel() {
   }, [play]);
 
   return (
-    <section ref={section} id="showreel" className="showreel" aria-label="Showreel de direção de arte">
+    <section ref={section} id="showreel" className="showreel" aria-label="Showreel de Mário Serafim">
       <div className="showreel-frame">
         <img src="/media/showreel/poster.webp" alt="Composição editorial em pedra, vidro, papel e interfaces" width="1280" height="720" />
         <video ref={video} src="/media/showreel/showreel.mp4" poster="/media/showreel/poster.webp" muted playsInline loop autoPlay={play} preload="metadata" aria-hidden="true" />
         <div className="showreel-slate" aria-hidden="true">{beats.map((beat, index) => <span key={beat} style={{ "--beat": index } as CSSProperties}>{beat}</span>)}</div>
         <span className="showreel-mark">MS/ SHOWREEL — 08 SEC</span>
       </div>
-      <div className="showreel-caption"><p>Direção de arte em movimento</p><p>Marca · Campanha · Produto · Experiência</p></div>
+      <div className="showreel-caption"><p>Selected work / moving image</p><p>Marca · Campanha · Produto · Experiência</p></div>
     </section>
   );
 }
