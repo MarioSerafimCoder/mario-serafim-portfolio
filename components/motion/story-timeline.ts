@@ -1,7 +1,7 @@
 export const storyChapters = [
   { id: "matter", number: "01", label: "Matéria", title: "Tudo começa em aberto.", body: "Forma, textura, contexto.", poster: "/media/narrative/matter.webp" },
   { id: "direction", number: "02", label: "Direção", title: "Escolher o que importa.", body: "Hierarquia, corte, ritmo.", poster: "/media/narrative/direction.webp" },
-  { id: "system", number: "03", label: "Sistema", title: "Fazer as partes conversarem.", body: "Marca, imagem, texto e movimento.", poster: "/media/narrative/system.webp" },
+  { id: "system", number: "03", label: "Linguagem", title: "Dar unidade às escolhas.", body: "Marca, imagem, texto e movimento.", poster: "/media/narrative/system.webp" },
   { id: "experience", number: "04", label: "Experiência", title: "Colocar a ideia no mundo.", body: "Telas, campanhas, ambientes e encontros.", poster: "/media/narrative/system.webp" },
 ] as const;
 

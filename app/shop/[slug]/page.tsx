@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
       <section className="product-includes">
         <p>O que está incluído</p>
-        <h2>Um sistema feito<br />para ser usado.</h2>
+        <h2>Estrutura feita<br />para ser usada.</h2>
         <ol>{product.includes.map((item, index) => <li key={item}><span>0{index + 1}</span>{item}</li>)}</ol>
       </section>
 

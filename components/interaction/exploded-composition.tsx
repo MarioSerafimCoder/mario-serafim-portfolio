@@ -7,7 +7,7 @@ export function ExplodedComposition() {
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+    if (!element || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     let frame = 0;
     let amount = 0;
@@ -63,7 +63,7 @@ export function ExplodedComposition() {
       <span className="explode-grid">GRADE</span>
       <span className="explode-color">COR</span>
       <span className="explode-symbol">MS/</span>
-      <p>DIREÇÃO DE ARTE É A COMBINAÇÃO INTENCIONAL DE SISTEMAS.</p>
+      <p>TIPO, IMAGEM, COR. A RELAÇÃO ENTRE ELES É UMA ESCOLHA.</p>
     </div>
   );
 }

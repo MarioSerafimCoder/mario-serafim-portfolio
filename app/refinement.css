@@ -159,7 +159,7 @@ button:active,a:active { opacity:.72; }
   .sheet-card>div:last-child span,.sheet-card small { font-size:11px; }
 
   .case-chapter-nav { top:auto; bottom:calc(var(--safe-bottom) + 10px); margin:0 var(--mobile-gutter) 18px; padding:4px; justify-content:center; gap:2px; background:#111e; backdrop-filter:blur(10px); border:1px solid #444; }
-  .case-hero h1 { font-size:15vw; letter-spacing:-.075em; }
+  .case-hero h1 { font-size:15vw; letter-spacing:-.04em; }
   .case-chapter-nav a { min-width:44px; min-height:44px; padding:0; display:grid; place-items:center; }
   .case-chapter-nav a b { display:none; }
   .case-chapter-nav a span { margin:0; font-size:11px; }

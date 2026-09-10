@@ -62,7 +62,7 @@ test("expõe a narrativa profissional e os sistemas editoriais", async () => {
 
   assert.match(work, /Folha de contato/i);
   assert.match(work, /Grade/);
-  assert.match(process, /Briefing[\s\S]*Imersão[\s\S]*Direção[\s\S]*Exploração[\s\S]*Sistema[\s\S]*Entrega/i);
+  assert.match(process, /Briefing[\s\S]*Imersão[\s\S]*Direção[\s\S]*Exploração[\s\S]*Refinamento[\s\S]*Entrega/i);
   assert.match(about, /Granistone A Rocha/);
   assert.match(about, /UX Design para desenvolvedores/);
   assert.match(about, /Centro Universitário Belas Artes/);

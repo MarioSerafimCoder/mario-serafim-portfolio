@@ -6,8 +6,8 @@ export function HomeProfile() {
       <section id="now" className="now-section" aria-labelledby="now-title">
         <div className="section-head"><p className="eyebrow">02 / NOW</p><span>2026 — Fortaleza</span></div>
         <div className="now-heading">
-          <h2 id="now-title">Working now.<br /><em>Looking forward.</em></h2>
-          <p>O trabalho acontece no presente: entre marcas, imagens, ferramentas emergentes e experiências digitais.</p>
+          <h2 id="now-title">Agora, na<br /><em>Granistone.</em></h2>
+          <p>Pedra natural, marca e imagem. Um trabalho que começa na matéria e chega à presença digital.</p>
         </div>
         <dl className="now-list">
           <div><dt>Currently</dt><dd>{profile.now.currently}</dd></div>

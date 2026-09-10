@@ -4,7 +4,7 @@ import { FormatTester } from "../../components/process/format-tester";
 
 export const metadata: Metadata = {
   title: "Processo — Mário Serafim",
-  description: "Do briefing à entrega: como Mário Serafim transforma contexto, escolhas e exploração em sistemas visuais aplicáveis.",
+  description: "Do briefing à entrega: contexto, exploração e critério nas decisões de direção de arte de Mário Serafim.",
 };
 
 const processIndex = [
@@ -12,7 +12,7 @@ const processIndex = [
   ["02", "Imersão", "imersao"],
   ["03", "Direção", "direcao"],
   ["04", "Exploração", "exploracao"],
-  ["05", "Sistema", "sistema"],
+  ["05", "Refinamento", "refinamento"],
   ["06", "Entrega", "entrega"],
 ];
 
@@ -24,7 +24,7 @@ export default function ProcessPage() {
         <h1>PROCESSO.</h1>
         <div className="process-hero__statement">
           <h2>O resultado é a parte que todo mundo vê.<br /><em>O trabalho começa bem antes.</em></h2>
-          <p>Antes da forma, eu procuro o problema. Depois, transformo contexto e escolhas em um sistema capaz de funcionar no mundo real.</p>
+          <p>Entender o pedido, encontrar uma direção e testar até onde ela se sustenta. O método se ajusta ao projeto; as decisões precisam ter motivo.</p>
         </div>
         <a className="process-entry" href="#briefing">Entrar no processo <span aria-hidden="true">↓</span></a>
       </header>
@@ -49,6 +49,8 @@ export default function ProcessPage() {
               <div><dt>Público</dt><dd>Quem precisa entender</dd></div>
               <div><dt>Contexto</dt><dd>Onde a ideia vai viver</dd></div>
               <div><dt>Restrição</dt><dd>O que não pode falhar</dd></div>
+              <div><dt>Prazo</dt><dd>Quando precisa estar pronto</dd></div>
+              <div><dt>Critério</dt><dd>Como avaliar a resposta</dd></div>
             </dl>
             <p>Pedido ≠ problema</p>
           </div>
@@ -60,7 +62,7 @@ export default function ProcessPage() {
         <div className="process-copy">
           <p><span>02</span> Imersão</p>
           <h2 id="imersao-title">Olhar antes<br />de opinar.</h2>
-          <div><p>Investigo repertório, categoria, comportamento e tensão cultural. A referência entra para ampliar a leitura, não para decidir por ela.</p><strong>Pinterest não é estratégia.</strong></div>
+          <div><p>Investigo a categoria, observo hábitos e cruzo referências de imagem, cultura e tipografia. Procuro o que se repete e o que ainda tem espaço.</p><strong>Uma pasta cheia não é uma direção.</strong></div>
         </div>
         <div className="immersion-wall" aria-label="Parede editorial de investigação e referências abstratas">
           <figure className="research-frame research-frame--matter">
@@ -76,7 +78,7 @@ export default function ProcessPage() {
             <figcaption><span>C / RITMO</span><b>Escala</b></figcaption>
           </figure>
           <div className="research-question">O QUE A CATEGORIA<br /><em>AINDA NÃO DISSE?</em></div>
-          <p>MAPA DE REFERÊNCIAS<br />ESTUDO EDITORIAL / NÃO É CASE</p>
+          <p>ESTUDOS AUTORAIS COM IA<br />MATÉRIA / CONTRASTE / RITMO</p>
         </div>
       </section>
 
@@ -86,12 +88,10 @@ export default function ProcessPage() {
           <h2 id="direcao-title">Pesquisa sem decisão<br />é só pesquisa.</h2>
           <div><p>O material bruto vira uma hipótese clara. Defino o que sustenta a ideia, o que cria diferença e o que precisa sair.</p><strong>Direção também é dizer não.</strong></div>
         </div>
-        <div className="direction-machine" aria-label="Síntese visual da passagem de informação para direção">
-          <div className="direction-input">
-            <span>CONTEXTO</span><span>COMPORTAMENTO</span><span>RESTRIÇÕES</span><span>REFERÊNCIAS</span><span>OBJETIVO</span><span>TENSÃO</span>
-          </div>
-          <div className="direction-filter"><span>SÍNTESE</span><b aria-hidden="true">→</b></div>
-          <div className="direction-output"><small>DIREÇÃO / 01</small><strong>CLARO.<br />DIRETO.<br /><em>INEQUÍVOCO.</em></strong><p>Uma ideia central.<br />Três princípios.<br />Critério para editar.</p></div>
+        <div className="direction-synthesis" aria-label="Da informação ao critério de direção">
+          <p>Informação <span aria-hidden="true">→</span> Padrão <span aria-hidden="true">→</span> Tensão</p>
+          <strong>Uma direção.<br />Razões claras.</strong>
+          <dl><div><dt>Ideia</dt><dd>O que merece ser dito.</dd></div><div><dt>Linguagem</dt><dd>Como aquilo precisa parecer.</dd></div><div><dt>Critério</dt><dd>O que fica. O que sai. Por quê.</dd></div></dl>
         </div>
       </section>
 
@@ -102,6 +102,7 @@ export default function ProcessPage() {
           <div><p>Abro rotas, confronto soluções e levo as promissoras longe o bastante para descobrir onde quebram.</p><strong>Se tudo parece bom, faltou editar.</strong></div>
         </div>
         <div className="contact-study" aria-label="Folha de contato com quatro explorações gráficas simuladas">
+          <p className="study-caption">EXERCÍCIO EDITORIAL / ROTAS SIMULADAS, SEM VÍNCULO COM CLIENTE</p>
           <article className="study-card study-card--a"><header><span>A / 01</span><b>DESCARTADA</b></header><div><strong>UMA</strong><i /></div><p>Bonita. Previsível.</p></article>
           <article className="study-card study-card--b"><header><span>B / 07</span><b>QUASE</b></header><div><i /><strong>IDEIA</strong></div><p>Tem ritmo. Falta motivo.</p></article>
           <article className="study-card study-card--c"><header><span>C / 12</span><b>FORÇA DEMAIS</b></header><div><strong>!</strong><i /><i /></div><p>Grita antes de falar.</p></article>
@@ -109,11 +110,12 @@ export default function ProcessPage() {
         </div>
       </section>
 
-      <section id="sistema" className="process-stage process-stage--system" aria-labelledby="sistema-title">
+      <section id="refinamento" className="process-stage process-stage--system" aria-labelledby="refinamento-title">
+        <span id="sistema" className="process-legacy-anchor" aria-hidden="true" />
         <div className="process-copy">
-          <p><span>05</span> Sistema e refinamento</p>
-          <h2 id="sistema-title">Uma peça bonita ainda<br />não é um sistema.</h2>
-          <div><p>A direção precisa manter identidade ao mudar de escala, formato e contexto. Testo regras, exceções e o ponto em que a consistência vira repetição.</p><strong>Clique nos formatos. A ideia precisa se adaptar.</strong></div>
+          <p><span>05</span> Refinamento</p>
+          <h2 id="refinamento-title">Escolher também<br />é criar.</h2>
+          <div><p>Comparo proporções, ajusto intervalos e testo a leitura de perto e de longe. A escolha precisa se sustentar no cartaz, na apresentação e na tela pequena.</p><strong>Se só funciona no mockup, ainda falta trabalho.</strong></div>
         </div>
         <FormatTester />
       </section>
@@ -122,7 +124,7 @@ export default function ProcessPage() {
         <div className="process-copy">
           <p><span>06</span> Entrega</p>
           <h2 id="entrega-title">O trabalho precisa<br />sobreviver sem mim.</h2>
-          <div><p>Organizo arquivos, regras e decisões para que outras pessoas consigam aplicar o sistema com clareza.</p><strong>final_final_agora-vai não é governança.</strong></div>
+          <div><p>Organizo arquivos, orientações e exemplos para quem vai usar o trabalho. Aprovação encerra uma etapa. Entrega exige que outra pessoa consiga continuar.</p><strong>final_final_agora-vai.psd não conta.</strong></div>
         </div>
         <div className="delivery-console" aria-label="Estrutura organizada de arquivos e orientações de entrega">
           <header><span>HANDOFF / 06</span><span>PRONTO PARA USO</span></header>
@@ -144,7 +146,7 @@ export default function ProcessPage() {
       </section>
 
       <section className="process-closing">
-        <p>Você já viu o resultado.<br />Agora sabe o que aconteceu antes dele.</p>
+        <p>O critério aparece<br />no trabalho.</p>
         <div><a href="/work">Ver o trabalho <span aria-hidden="true">↗</span></a><a href="/contact">Começar uma conversa <span aria-hidden="true">↗</span></a></div>
       </section>
     </main>

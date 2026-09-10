@@ -31,8 +31,6 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
   const pathname = usePathname();
   const commandOpen = overlay === "command";
   const statusOpen = overlay === "status";
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const cursorLabelRef = useRef<HTMLSpanElement>(null);
   const commandRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -68,59 +66,7 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
     return undefined;
   }, [commandOpen]);
 
-  useEffect(() => {
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    let pointerFrame = 0;
-    let pointerX = -100;
-    let pointerY = -100;
-    const renderCursor = () => {
-      cursorRef.current?.style.setProperty("transform", `translate3d(${pointerX}px,${pointerY}px,0)`);
-      pointerFrame = 0;
-    };
-    const move = (event: PointerEvent) => {
-      pointerX = event.clientX;
-      pointerY = event.clientY;
-      if (!pointerFrame) pointerFrame = requestAnimationFrame(renderCursor);
-    };
-    const over = (event: PointerEvent) => {
-      const target = (event.target as HTMLElement).closest<HTMLElement>("[data-cursor]");
-      const label = target?.dataset.cursor ?? "+";
-      if (cursorLabelRef.current) cursorLabelRef.current.textContent = label;
-      cursorRef.current?.classList.toggle("is-active", !!target);
-    };
-    window.addEventListener("pointermove", move, { passive: true });
-    window.addEventListener("pointerover", over, { passive: true });
-    return () => {
-      if (pointerFrame) cancelAnimationFrame(pointerFrame);
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerover", over);
-    };
-  }, []);
 
-  useEffect(() => {
-    if (window.matchMedia("(pointer: coarse)").matches) {
-      document.documentElement.style.setProperty("--scroll-velocity", "0");
-      return;
-    }
-    let lastY = window.scrollY;
-    let frame = 0;
-    let resetTimer = 0;
-    const measure = () => {
-      const delta = Math.max(-24, Math.min(24, window.scrollY - lastY));
-      lastY = window.scrollY;
-      document.documentElement.style.setProperty("--scroll-velocity", `${delta}`);
-      window.clearTimeout(resetTimer);
-      resetTimer = window.setTimeout(() => document.documentElement.style.setProperty("--scroll-velocity", "0"), 90);
-      frame = 0;
-    };
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(measure); };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.clearTimeout(resetTimer);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [pathname]);
 
   useEffect(() => {
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
@@ -147,13 +93,7 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
         <b>GRADE / 12 COLUNAS</b>
       </div>
 
-      <div ref={cursorRef} className="artboard-cursor" aria-hidden="true">
-        <i /><i /><i /><i /><span ref={cursorLabelRef}>+</span>
-      </div>
 
-      <button className="grid-status" onClick={() => onGridChange(!gridOpen)} aria-pressed={gridOpen}>
-        G / GRADE {gridOpen ? "ATIVA" : "OCULTA"}
-      </button>
 
       <div className={`command-palette ${commandOpen ? "is-open" : ""}`} aria-hidden={!commandOpen}>
         <div className="command-panel" ref={commandRef} role="dialog" aria-modal="true" aria-label="Comandos do site">

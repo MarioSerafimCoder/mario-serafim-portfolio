@@ -14,7 +14,7 @@ export function FormatTester() {
 
   return (
     <div className="format-tester">
-      <div className="format-controls" aria-label="Testar o sistema em diferentes formatos">
+      <div className="format-controls" aria-label="Comparar a composição em diferentes formatos">
         {formats.map((format) => (
           <button
             type="button"
@@ -30,7 +30,7 @@ export function FormatTester() {
       </div>
       <div className="format-stage" aria-live="polite">
         <div className={`format-canvas format-canvas--${active.id}`}>
-          <span>MS / SISTEMA 05</span>
+          <span>ESTUDO / 05</span>
           <strong>UMA<br />IDEIA.</strong>
           <i aria-hidden="true" />
           <b>{active.note}</b>

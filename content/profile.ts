@@ -3,7 +3,7 @@ export const profile = {
   role: "Creative Director / Art Director",
   location: "Fortaleza, Brazil",
   signature: "Boas ideias precisam de direção.",
-  intro: "Mário Serafim é Diretor Criativo e Diretor de Arte em Fortaleza. Trabalha entre identidade, campanhas e produtos digitais, aproximando estratégia, imagem, tipografia e movimento.",
+  intro: "Sou Mário Serafim, Diretor Criativo e Diretor de Arte em Fortaleza. Trabalho com identidade, campanhas e produtos digitais. Defino a linguagem, acompanho a execução e ajusto o que a ideia exige.",
   now: {
     year: "2026",
     currently: "Creative / Art Direction at Granistone A Rocha",

@@ -1,5 +1,5 @@
 .narrative-intro { padding:120px var(--editorial-gutter) 36px; }
-.narrative-intro h1 { margin:32px 0; font:550 clamp(4rem,11.4vw,14rem)/.94 var(--font-sans); letter-spacing:-.075em; }
+.narrative-intro h1 { margin:32px 0; font:550 clamp(4rem,11.4vw,14rem)/.94 var(--font-sans); letter-spacing:-.04em; }
 .narrative-intro h1>span { white-space:nowrap; }
 .narrative-intro-foot { display:flex; align-items:center; justify-content:space-between; gap:24px; font-size:16px; }
 .narrative-intro-foot a { padding:12px 0; border-bottom:1px solid; }

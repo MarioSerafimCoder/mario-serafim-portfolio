@@ -8,7 +8,7 @@ function readText(data: FormData, key: string) {
 }
 
 export default function ContactPage() {
-  const [status, setStatus] = useState("Preencha os campos para gerar um briefing curto.");
+  const [status, setStatus] = useState("Prepare o briefing. Você escolhe como enviar.");
   const [briefing, setBriefing] = useState("");
   const [subject, setSubject] = useState("");
   const [copyLabel, setCopyLabel] = useState("Copiar novamente");
@@ -17,10 +17,10 @@ export default function ContactPage() {
     try {
       await navigator.clipboard.writeText(text);
       setCopyLabel("Copiado ✓");
-      setStatus("Briefing copiado. Escolha como deseja enviá-lo.");
+      setStatus("Briefing copiado. Falta enviar pelo canal que preferir.");
     } catch {
       setCopyLabel("Copiar novamente");
-      setStatus("Não foi possível copiar automaticamente. Selecione o briefing ou use uma das opções de envio.");
+      setStatus("Não foi possível copiar. Selecione o texto abaixo ou abra uma opção de envio.");
     }
   };
 
@@ -54,7 +54,7 @@ export default function ContactPage() {
       <section className="contact-intro">
         <p>Antes de escrever</p>
         <h2>Contexto ajuda.</h2>
-        <p>Conte o que está criando, em que momento o projeto está e qual decisão precisa ser tomada. Curto e direto funciona muito bem.</p>
+        <p>Conte o que está criando, em que momento o projeto está e qual decisão precisa ser tomada. Pode ser direto.</p>
       </section>
       <form className="contact-form" onSubmit={submit}>
         <label htmlFor="name">Nome<input id="name" name="name" type="text" autoComplete="name" required /></label>
@@ -81,7 +81,7 @@ export default function ContactPage() {
       </form>
       <section className="contact-expectations">
         <p>O que acontece depois</p>
-        <div><span>01</span><strong>Aderência</strong><p>Revisão do contexto e do escopo.</p></div>
+        <div><span>01</span><strong>Leitura</strong><p>Revisão do contexto e do escopo.</p></div>
         <div><span>02</span><strong>Conversa</strong><p>Alinhamento de objetivos, prazo e modelo de trabalho.</p></div>
         <div><span>03</span><strong>Próximo passo</strong><p>Acordo sobre o caminho criativo.</p></div>
       </section>

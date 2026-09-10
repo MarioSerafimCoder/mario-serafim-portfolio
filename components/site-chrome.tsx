@@ -154,24 +154,6 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
     };
   }, [pathname]);
 
-  useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>("#main-content main > section:not(.selected):not(.visual-story), #main-content main > header, .editorial-home .project-card"));
-    if (!("IntersectionObserver" in window)) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: "0px 0px -8%", threshold: 0 });
-    elements.forEach((element, index) => {
-      element.classList.add("reveal-section");
-      if (index === 0 || element.getBoundingClientRect().top < window.innerHeight) element.classList.add("is-visible");
-      else observer.observe(element);
-    });
-    return () => observer.disconnect();
-  }, [pathname]);
 
   const removeItem = (slug: string) => {
     const next = bag.filter((item) => item.slug !== slug);

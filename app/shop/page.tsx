@@ -10,7 +10,7 @@ export default function ShopPage() {
       <header className="page-hero shop-hero">
         <p>05 / Produtos digitais</p>
         <h1>Loja.</h1>
-        <p>Ferramentas, sistemas e recursos digitais para processos criativos mais claros e bem dirigidos.</p>
+        <p>Ferramentas e recursos digitais para organizar o trabalho criativo.</p>
       </header>
 
       <section className="shop-intro">
@@ -35,7 +35,7 @@ export default function ShopPage() {
 
       <section className="shop-principles">
         <p>Princípios da coleção</p>
-        {["Estrutura clara", "Sistemas editáveis", "Documentação prática", "Licença objetiva"].map((item, index) => (
+        {["Estrutura clara", "Arquivos editáveis", "Documentação prática", "Licença objetiva"].map((item, index) => (
           <div key={item}><span>0{index + 1}</span><strong>{item}</strong></div>
         ))}
       </section>
