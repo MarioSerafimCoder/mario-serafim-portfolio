@@ -11,7 +11,7 @@ h1,h2,h3 { font-weight:var(--type-heading-weight); }
 .narrative-intro-foot p { margin:0; line-height:1.5; }
 /* One quiet editorial aside; system serif adds no font download. */
 .editorial-home .narrative-intro-foot em { font:italic 400 1.15em/1.5 Georgia,serif; letter-spacing:-.01em; color:var(--editorial-muted); }
-.editorial-home em,.about-hero em,.about-philosophy h2 em,.now-heading em,.track-section>h2 em,.outside-heading em,.about-record>h2 em,.profile-intro h2 em,.process-hero__statement h2 em,.process-philosophy h2 em,.home-process__heading h2 em,.research-question em { font-family:var(--font-sans); font-style:normal; font-weight:inherit; letter-spacing:inherit; line-height:inherit; }
+.editorial-home .selected h2 em,.about-hero em,.about-philosophy h2 em { font-family:var(--font-sans); font-style:normal; font-weight:inherit; letter-spacing:inherit; line-height:inherit; }
 .page-hero h1,.contact-hero h1,.about-hero h1,.process-hero h1,.legal-page h1,.status-page h1 { font-weight:850; line-height:.87; letter-spacing:-.04em; transform:none; transition:none; }
 .page-hero h1 { font-size:clamp(4rem,13.8vw,16rem); }
 .contact-hero h1 { font-size:clamp(4rem,10.5vw,12rem); }
@@ -31,7 +31,7 @@ h1,h2,h3 { font-weight:var(--type-heading-weight); }
 .project-visual__label>span,.project-visual__label>small { opacity:.7; }
 .work-interlude { min-height:0; margin-block:24px; padding-block:64px; background:var(--paper); color:var(--ink); display:grid; grid-template-columns:2fr 1fr; gap:32px; border-block:1px solid var(--editorial-line); }
 .work-interlude p { max-width:24ch; font-size:clamp(1.7rem,3.2vw,3.4rem); font-weight:650; line-height:1.08; letter-spacing:-.025em; }
-.work-interlude em { color:inherit; }
+.work-interlude em { color:var(--red-bright); }
 .work-interlude span { align-self:end; justify-self:end; font-size:11px; }
 .now-section { padding-block:var(--space-md); }
 .now-heading { grid-template-columns:1fr 1fr; margin:48px 0 60px; }
@@ -47,7 +47,6 @@ h1,h2,h3 { font-weight:var(--type-heading-weight); }
 .outside-grid article { aspect-ratio:auto; min-height:170px; border:0; border-top:1px solid var(--editorial-line); padding:14px 0; }
 .outside-grid article:nth-child(2) { transform:none; }
 .outside-grid h3 { font-size:clamp(1.4rem,2.5vw,2.8rem); }
-.outside-heading em { color:inherit; }
 .about-philosophy { grid-template-columns:2fr 8fr; }
 .about-philosophy>p:last-child { grid-column:2; max-width:52ch; }
 .about-philosophy h2 { font-size:clamp(3rem,7vw,8rem); text-transform:none; }
