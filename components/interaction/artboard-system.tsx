@@ -16,7 +16,7 @@ type ArtboardSystemProps = {
 const commands = [
   { href: "/work", label: "Work / Projetos selecionados", key: "W" },
   { href: "/#now", label: "Now / 2026", key: "N" },
-  { href: "/lab", label: "Lab / Experimentos", key: "L" },
+  { href: "/process", label: "Processo / Do briefing à entrega", key: "P" },
   { href: "/about", label: "About / Mário", key: "A" },
   { href: "/contact", label: "Contact", key: "C" },
 ];
@@ -50,7 +50,7 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
         onOverlayChange(commandOpen ? null : "command");
       }
       if (event.key.toLowerCase() === "g") onGridChange(!gridOpen);
-      if (event.key.toLowerCase() === "l") window.location.assign("/lab");
+      if (event.key.toLowerCase() === "p") window.location.assign("/process");
       if (event.key.toLowerCase() === "r") {
         const project = projects[Math.floor(Math.random() * projects.length)];
         window.location.assign(`/work/${project.slug}`);
@@ -161,7 +161,7 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
           <nav>
             {visibleCommands.map((item) => <a key={item.href} href={item.href} tabIndex={commandOpen ? 0 : -1}><kbd>{item.key}</kbd><span>{item.label}</span><b>↗</b></a>)}
           </nav>
-          <div className="command-shortcuts"><span>G — Grade</span><span>R — Projeto aleatório</span><span>L — Laboratório</span><span>ESC — Fechar</span></div>
+          <div className="command-shortcuts"><span>G — Grade</span><span>R — Projeto aleatório</span><span>P — Processo</span><span>ESC — Fechar</span></div>
         </div>
       </div>
 
@@ -169,7 +169,7 @@ export function ArtboardSystem({ overlay, onOverlayChange, gridOpen, onGridChang
         <div role="dialog" aria-modal="true" aria-label="Status do sistema MS">
           <button tabIndex={statusOpen ? 0 : -1} onClick={() => onOverlayChange(null)}>Fechar ×</button>
           <strong>MS/<br />ESTADO DO SISTEMA</strong>
-          <p>CRIATIVO ........ ATIVO<br />DIREÇÃO DE ARTE ... ATIVA<br />EXPERIMENTOS ..... EM CURSO<br />PRAZOS ........... SIGILOSOS</p>
+          <p>CRIATIVO ........ ATIVO<br />DIREÇÃO DE ARTE ... ATIVA<br />CRITÉRIO ......... PRESENTE<br />PRAZOS ........... SIGILOSOS</p>
         </div>
       </div>
     </>

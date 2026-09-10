@@ -31,7 +31,7 @@ test("renderiza a página inicial em português", async () => {
   assert.match(html, /Da matéria à experiência/i);
   assert.match(html, /Creative \/ Art Direction at Granistone A Rocha/i);
   assert.match(html, /Outside the grid/i);
-  assert.match(html, /Controle precisa[\s\S]*de descoberta/i);
+  assert.match(html, /O resultado[\s\S]*vem depois/i);
   assert.match(html, /Ver folha de contato/i);
   assert.doesNotMatch(html, /Your site is taking shape|Building your site/);
 });
@@ -41,7 +41,7 @@ test("renderiza as principais páginas internas", async () => {
     ["/work", /Da matéria/],
     ["/work/granistone", /Granistone[\s\S]*matéria/i],
     ["/archive", /Um registro em expansão/],
-    ["/lab", /Testar rápido/],
+    ["/process", /O resultado é a parte que todo mundo vê/],
     ["/about", /Mário,[\s\S]*em contexto/],
     ["/shop", /Princípios da coleção/],
     ["/shop/brand-presentation-system", /O que está incluído/],
@@ -57,17 +57,23 @@ test("renderiza as principais páginas internas", async () => {
 
 test("expõe a narrativa profissional e os sistemas editoriais", async () => {
   const work = await (await render("/work")).text();
-  const lab = await (await render("/lab")).text();
+  const process = await (await render("/process")).text();
   const about = await (await render("/about")).text();
 
   assert.match(work, /Folha de contato/i);
   assert.match(work, /Grade/);
-  assert.match(lab, /Máquina de grade/i);
+  assert.match(process, /Briefing[\s\S]*Imersão[\s\S]*Direção[\s\S]*Exploração[\s\S]*Sistema[\s\S]*Entrega/i);
   assert.match(about, /Granistone A Rocha/);
   assert.match(about, /UX Design para desenvolvedores/);
   assert.match(about, /Centro Universitário Belas Artes/);
-  assert.match(lab, /MS\/LAB é onde testo ferramentas/);
-  assert.doesNotMatch(`${work}${lab}${about}`, /Your site is taking shape|Building your site/i);
+  assert.match(process, /O método muda\. O rigor não\./);
+  assert.doesNotMatch(`${work}${process}${about}`, /Your site is taking shape|Building your site/i);
+});
+
+test("redireciona o endereço antigo do Lab para Processo", async () => {
+  const response = await render("/lab");
+  assert.ok([301, 307, 308].includes(response.status));
+  assert.equal(new URL(response.headers.get("location"), "http://localhost").pathname, "/process");
 });
 
 test("mantém os painéis fechados fora da tela e sem interação", async () => {

@@ -3,7 +3,7 @@ import { HeroArtboard } from "../components/motion/hero-artboard";
 import { Showreel } from "../components/motion/showreel";
 import { VisualStory } from "../components/motion/visual-story";
 import { ProjectCard } from "../components/projects/project-card";
-import { HomeLab } from "../components/home-lab";
+import { HomeProcess } from "../components/home-process";
 import { HomeProfile } from "../components/profile/home-profile";
 import { projects } from "../data/projects";
 
@@ -19,7 +19,7 @@ export default function Home() {
         <div className="project-grid">{projects.map((project, index) => <Fragment key={project.slug}><ProjectCard project={project} index={index} />{index === 1 && <div className="work-interlude"><p>Quando as peças conversam,<br />o trabalho <em>ganha escala.</em></p><span>Clareza / ritmo / consistência</span></div>}</Fragment>)}</div>
       </section>
       <HomeProfile />
-      <HomeLab />
+      <HomeProcess />
       <section className="home-closing"><p>Vamos conversar.</p><h2>Agora vamos<br /><em>criar algo.</em></h2><a href="/contact">Iniciar um projeto ↗</a></section>
     </main>
   );

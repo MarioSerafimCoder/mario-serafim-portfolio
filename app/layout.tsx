@@ -5,6 +5,7 @@ import "./refinement.css";
 import "./editorial.css";
 import "./narrative.css";
 import "./experience.css";
+import "./process.css";
 import { SiteChrome } from "../components/site-chrome";
 
 const siteUrl = "https://mario-serafim-portfolio.mario-92.chatgpt.site";

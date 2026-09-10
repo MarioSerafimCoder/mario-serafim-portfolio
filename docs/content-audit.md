@@ -17,8 +17,8 @@ Referências factuais públicas consultadas: LinkedIn de Mário Serafim, perfil 
 | About / abertura | “Mário dirige sistemas visuais.” | Definia a pessoa por uma abstração. | “Mário, em contexto.” + apresentação factual. | Torna a página humana e direta. |
 | About / trajetória | Ausente | Funcionava como manifesto, não como perfil. | Experiência atual, formação e palestra. | Responde quem, onde, agora e com qual repertório. |
 | About / filosofia | “Direção não é decoração...” | Tom defensivo e vocabulário recorrente. | “Escolher, editar e conectar...” | Explica o modo de trabalho por ações. |
-| Lab | “O Laboratório documenta perguntas...” | Não explicava a relação do Lab com a prática. | “MS/LAB é onde testo ferramentas...” | Define por que os experimentos existem. |
-| Navegação | Projetos / Arquivo / Laboratório / Sobre / Contato | Muitos destinos e rótulos longos. | Work / Now / Lab / About / Contact | Facilita orientação; Archive permanece fora da navegação. |
+| Processo | Experimentos isolados no Lab | Não mostrava como a prática leva do problema à aplicação. | Seis decisões conectadas: briefing, imersão, direção, exploração, sistema e entrega. | Explica o raciocínio sem transformar a página em aula ou fabricar evidências de projeto. |
+| Navegação | Work / Now / Lab / About / Contact | “Lab” prometia experimentação, mas escondia o método profissional. | Work / Now / Processo / About / Contact | Torna o percurso profissional explícito; o endereço antigo redireciona para Processo. |
 | Contato | “Tem um projeto que precisa de direção?” | Repete a assinatura e torna o convite genérico. | “Tem um projeto em curso? Compartilhe o essencial.” | Pede contexto e inicia uma conversa concreta. |
 | SEO | “Direção criativa, direção de arte...” | Lista de serviços sem a pessoa ou localização. | Nome, profissão, Fortaleza, marca, campanhas e produtos digitais. | Melhora clareza para busca e compartilhamento. |
 

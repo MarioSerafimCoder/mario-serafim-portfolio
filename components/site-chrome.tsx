@@ -11,7 +11,7 @@ type Overlay = "menu" | "bag" | "command" | "status" | null;
 const navigation = [
   { href: "/work", label: "Work" },
   { href: "/#now", label: "Now" },
-  { href: "/lab", label: "Lab" },
+  { href: "/process", label: "Processo" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -34,8 +34,8 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const menuOpen = overlay === "menu";
   const bagOpen = commerceEnabled && overlay === "bag";
   const overlayOpen = overlay !== null;
-  const headerOnDark = pathname === "/lab" || pathname === "/contact";
-  const markSuffix = pathname.startsWith("/work") ? "W" : pathname === "/lab" ? "L" : pathname === "/about" ? "A" : pathname.startsWith("/shop") ? "S" : pathname === "/contact" ? "C" : pathname === "/archive" ? "R" : "";
+  const headerOnDark = pathname === "/process" || pathname === "/contact";
+  const markSuffix = pathname.startsWith("/work") ? "W" : pathname === "/process" ? "P" : pathname === "/about" ? "A" : pathname.startsWith("/shop") ? "S" : pathname === "/contact" ? "C" : pathname === "/archive" ? "R" : "";
 
   const closeOverlay = useCallback(() => {
     shouldRestoreFocusRef.current = true;
@@ -204,7 +204,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <footer className="footer">
         <a href="/" className="footer-mark" aria-label="Mário Serafim — Início">MS/</a>
         <p>Creative Director<br />Art Director</p>
-        <div><a href="/work">Work</a><a href="/#now">Now</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+        <div><a href="/work">Work</a><a href="/#now">Now</a><a href="/process">Processo</a><a href="/about">About</a><a href="/contact">Contact</a></div>
         <div className="footer-legal"><a href="/privacy">Privacidade</a><a href="/terms">Termos</a><a href="/license">Licença</a></div>
         <p>Fortaleza — Brasil<br />© 2026</p>
       </footer>

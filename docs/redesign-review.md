@@ -1,7 +1,7 @@
 # Revisão editorial — 09/09/2026
 
 ## Auditoria
-Preservados: MS/, identidade em preto/papel/vermelho, fontes, quatro registros de projeto, rotas, laboratório, loja e gerador de briefing.
+Preservados: MS/, identidade em preto/papel/vermelho, fontes, quatro registros de projeto, loja e gerador de briefing. O antigo laboratório foi substituído por uma narrativa de processo ligada à prática profissional.
 Problemas: abertura e manifesto adiam trabalhos; cases repetem metadados e composições sem informação adicional; lista de projetos ausente no HTML inicial; animação de seção extensa pode esconder conteúdo.
 
 ## Implementação
