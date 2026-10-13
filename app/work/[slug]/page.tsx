@@ -1,3 +1,5 @@
+import { caseMedia } from "../../../data/case-media";
+import { CaseApplications } from "../../../components/projects/case-applications";
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -66,9 +68,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     { number: "01", slug: "impact", title: "Impacto" },
     { number: "02", slug: "why", title: "Por quê" },
     { number: "03", slug: "idea", title: "A ideia" },
-    { number: "04", slug: "world", title: "O universo" },
+    { number: "04", slug: "world", title: "Aplicações" },
     { number: "05", slug: "motion", title: "Em movimento" },
-    { number: "06", slug: "result", title: "Resultado" },
+    { number: "06", slug: "result", title: "Síntese" },
   ];
 
   return (
@@ -89,13 +91,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <h2>{project.description}</h2>
       </section>
 
+      <p className="case-disclosure">{caseMedia[project.slug].context}. Os visuais procedurais apresentados são estudos autorais. Entregas e resultados comerciais só serão incluídos com documentação.</p>
       <ChapterNavigation chapters={chapters} />
 
-      <section className="case-chapter case-chapter-02" id="why"><span>02 / Por quê</span><h2>Antes da forma,<br />a razão.</h2><p>{narrative.why}</p></section>
+      <section className="case-chapter case-chapter-02" id="why"><span>02 / Por quê</span><h2>{caseMedia[project.slug].title}</h2><p>{narrative.why}</p></section>
       <section className="case-chapter case-chapter-03" id="idea"><span>03 / A ideia</span><h2>Uma decisão<br />central.</h2><p>{narrative.idea}</p><ProjectVisual project={project} context="preview" className="case-chapter-visual" /></section>
-      <section className="case-world" id="world"><div><span>04 / Construindo o universo</span><h2>{narrative.world}</h2></div><ProjectVisual project={project} context="preview" /><ProjectVisual project={project} context="preview" /></section>
+      <section className="case-world" id="world"><div><span>04 / Construindo o universo</span><h2>{narrative.world}</h2></div><CaseApplications slug={project.slug} /></section>
       <section className="case-chapter case-chapter-04" id="motion"><span>05 / Em movimento</span><h2>Repetir sem<br />se repetir.</h2><p>{narrative.motion}</p><ProjectVisual project={project} context="preview" className="case-chapter-visual" /></section>
-      <section className="case-result" id="result"><span>06 / Resultado</span><h2>{narrative.result}</h2><a href="/contact">Conversar sobre um projeto ↗</a></section>
+      <section className="case-result" id="result"><span>06 / Síntese da direção</span><h2>{narrative.result}</h2><a href="/contact">Conversar sobre um projeto ↗</a></section>
 
       <nav className="case-navigation" aria-label="Navegação entre projetos">
         <a href={`/work/${previous.slug}`}><span>Projeto anterior</span><strong>{previous.title}</strong></a>

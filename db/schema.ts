@@ -1,4 +1,4 @@
-// Intentionally empty by default.
-// Add Drizzle tables here when the site actually needs a database.
-// See examples/d1/db/schema.ts for an opt-in example.
-export {};
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+export const leads = sqliteTable("leads", { id: text("id").primaryKey(), email: text("email").notNull().unique(), name: text("name").notNull(), createdAt: text("created_at").notNull(), updatedAt: text("updated_at").notNull() });
+export const leadSubmissions = sqliteTable("lead_submissions", { id: text("id").primaryKey(), leadId: text("lead_id").notNull().references(() => leads.id), kind: text("kind").notNull(), segment: text("segment").notNull(), stage: text("stage").notNull(), message: text("message").notNull(), answers: text("answers_json").notNull(), campaign: text("campaign_json").notNull(), serviceConsent: integer("service_consent").notNull(), marketingConsent: integer("marketing_consent").notNull(), consentVersion: text("consent_version").notNull(), createdAt: text("created_at").notNull() });
+export const leadRateLimits = sqliteTable("lead_rate_limits", { key: text("key").primaryKey(), count: integer("count").notNull(), expires: integer("expires").notNull() });

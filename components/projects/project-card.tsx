@@ -18,10 +18,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
     return () => observer.disconnect();
   }, []);
 
-  const role = project.role
-    .replaceAll("Direção Criativa", "Creative Direction")
-    .replaceAll("Direção de Arte", "Art Direction")
-    .replace("Produto", "Product");
+  const role = project.role;
 
   return (
     <a
@@ -37,8 +34,8 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         <span>{project.year}</span>
       </div>
       <dl className="project-context">
-        <div><dt>Role</dt><dd>{role}</dd></div>
-        <div><dt>Scope</dt><dd>{project.categories.join(" · ")}</dd></div>
+        <div><dt>Atuação</dt><dd>{role}</dd></div>
+        <div><dt>Escopo</dt><dd>{project.categories.join(" · ")}</dd></div>
       </dl>
       <p className="project-editorial-description">{project.description}<span aria-hidden="true">↗</span></p>
     </a>

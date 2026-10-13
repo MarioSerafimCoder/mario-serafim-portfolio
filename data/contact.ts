@@ -1,5 +1,5 @@
 export const contactConfig = {
-  email: "mario.serafim@granistone.com.br",
+  email: "marioserafim.da@gmail.com",
   whatsapp: "",
 } as const;
 

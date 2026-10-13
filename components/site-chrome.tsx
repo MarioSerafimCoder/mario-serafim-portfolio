@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { rememberCampaign } from "../data/campaign";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { commerceEnabled } from "../data/products";
 import { ArtboardSystem } from "./interaction/artboard-system";
@@ -9,11 +10,11 @@ type BagItem = { slug: string; name: string; price: number };
 type Overlay = "menu" | "bag" | "command" | "status" | null;
 
 const navigation = [
-  { href: "/work", label: "Work" },
-  { href: "/#now", label: "Now" },
+  { href: "/work", label: "Projetos" },
+  { href: "/diagnostico", label: "Diagnóstico gratuito" },
   { href: "/process", label: "Processo" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about", label: "Sobre" },
+  { href: "/contact", label: "Contato" },
 ];
 const visibleNavigation = navigation;
 
@@ -23,6 +24,7 @@ function isNavigationActive(pathname: string, href: string) {
 
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  useEffect(() => { rememberCampaign(); }, [pathname]);
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [gridOpen, setGridOpen] = useState(false);
   const [bag, setBag] = useState<BagItem[]>([]);
@@ -34,7 +36,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   const menuOpen = overlay === "menu";
   const bagOpen = commerceEnabled && overlay === "bag";
   const overlayOpen = overlay !== null;
-  const headerOnDark = pathname === "/process" || pathname === "/contact";
+  const headerOnDark = pathname === "/process" || pathname === "/contact" || pathname === "/arquitetos";
   const markSuffix = pathname.startsWith("/work") ? "W" : pathname === "/process" ? "P" : pathname === "/about" ? "A" : pathname.startsWith("/shop") ? "S" : pathname === "/contact" ? "C" : pathname === "/archive" ? "R" : "";
 
   const closeOverlay = useCallback(() => {
@@ -170,7 +172,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <header className={`site-header persistent-header ${headerOnDark ? "header-on-dark" : ""}`}>
         <a href="/" className="mark" aria-label="Mário Serafim — Início" data-cursor="ABRIR">MS/{markSuffix}</a>
         <nav aria-label="Navegação principal">
-          {visibleNavigation.filter((item) => item.href !== "/contact").map((item) => (
+          {visibleNavigation.map((item) => (
             <a key={item.href} href={item.href} aria-current={isNavigationActive(pathname, item.href) ? "page" : undefined}>{item.label}</a>
           ))}
         </nav>
@@ -186,7 +188,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
       <footer className="footer">
         <a href="/" className="footer-mark" aria-label="Mário Serafim — Início">MS/</a>
         <p>Creative Director<br />Art Director</p>
-        <div><a href="/work">Work</a><a href="/#now">Now</a><a href="/process">Processo</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+        <div><a href="/work">Projetos</a><a href="/#now">Now</a><a href="/process">Processo</a><a href="/about">Sobre</a><a href="/contact">Contato</a></div>
         <div className="footer-legal"><a href="/privacy">Privacidade</a><a href="/terms">Termos</a><a href="/license">Licença</a></div>
         <p>Fortaleza — Brasil<br />© 2026</p>
       </footer>

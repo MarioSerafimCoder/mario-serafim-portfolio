@@ -1,11 +1,1 @@
-export function HeroArtboard() {
-  return (
-    <>
-      <header className="narrative-intro" aria-labelledby="hero-title">
-        <div className="editorial-kicker"><span>Creative Director / Art Director</span><span>Fortaleza — Brazil</span></div>
-        <h1 id="hero-title">Mário <span>Serafim<span className="signature-dot">.</span></span></h1>
-        <div className="narrative-intro-foot"><p>Boas ideias precisam de direção.<br /><em>E de alguém que faça escolhas.</em></p><a href="#showreel">Ver showreel ↓</a></div>
-      </header>
-    </>
-  );
-}
+export function HeroArtboard() { return <header className="narrative-intro" aria-labelledby="hero-title"><div className="editorial-kicker"><span>Creative Director / Art Director</span><span>Fortaleza — Brazil</span></div><h1 id="hero-title">Mário <span>Serafim<span className="signature-dot">.</span></span></h1><p className="hero-positioning">Branding e identidade visual para profissionais que estão construindo o próprio nome.</p><div className="hero-actions"><a href="#selected-title">Conhecer projetos ↗</a><a href="/diagnostico">Avaliar minha marca →</a></div><nav className="commercial-paths" aria-label="Caminhos diretos"><a href="#especialidades">Branding e serviços</a><a href="/contact">Contato</a></nav><div className="narrative-intro-foot"><p>Boas ideias precisam de direção.<br /><em>E de alguém que faça escolhas.</em></p><a href="#showreel">Ver showreel ↓</a></div></header>; }
