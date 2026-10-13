@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync } from 'node:fs';
 import { captureLead } from '../worker/leads.ts';
-const migration=readFileSync(new URL('../db/migrations/0001_leads.sql',import.meta.url),'utf8');
+const migration=readFileSync(new URL('../drizzle/0000_small_naoko.sql',import.meta.url),'utf8');
 function setup(){const sql=new DatabaseSync(':memory:');sql.exec(migration);const wrap=(query,values=[])=>({bind(...args){return wrap(query,args)},async first(){return sql.prepare(query).get(...values)},async run(){return sql.prepare(query).run(...values)}});return {sql,env:{DB:{prepare:wrap,async batch(statements){sql.exec('BEGIN');try{for(const s of statements)await s.run();sql.exec('COMMIT')}catch(e){sql.exec('ROLLBACK');throw e}}},LEAD_CAPTURE_ENABLED:'true',STUDIO_CONTACT_EMAIL:'test@example.com',RATE_LIMIT_SALT:'test-only'}}}
 const body={name:'Teste Cadastro',email:'TEST@example.com',kind:'diagnostic',segment:'medicos',stage:'Começando atuação independente',answers:[0,1,2,0,1,2,0],serviceConsent:true,marketingConsent:false,campaign:{utm_source:'test'},website:''};
 const request=(data=body,origin='https://site.test')=>new Request('https://site.test/api/leads',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify(data)});

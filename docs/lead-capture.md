@@ -9,7 +9,7 @@ Destino dos registros: banco próprio, tabelas leads e lead_submissions. O conta
 ## Ativação após autorização de publicação
 
 1. Provisionar o binding Cloudflare D1 DB na hospedagem e identificar o banco real.
-2. Aplicar db/migrations/0001_leads.sql no banco real. Fazer backup se já houver dados.
+2. Aplicar a migração gerada em drizzle/0000_small_naoko.sql no banco real. Fazer backup se já houver dados. No fluxo Sites, a migração é aplicada antes do Worker.
 3. Configurar STUDIO_CONTACT_EMAIL=marioserafim.da@gmail.com e RATE_LIMIT_SALT com um valor aleatório privado na hospedagem. Não commitar segredos. Ativar LEAD_CAPTURE_ENABLED=true somente quando banco e atendimento estiverem preparados.
 4. Publicar a versão autorizada e realizar um cadastro controlado. Conferir HTTP 201, registro, consentimento, origem e visibilidade na consulta administrativa. Excluir o contato de teste depois.
 5. Manter LEAD_CAPTURE_ENABLED desativado caso a migração ou o teste falhe. A API responde 503; a interface não confirma cadastro e mantém os campos. O diagnóstico oferece recomendações locais sem afirmar persistência.
@@ -19,7 +19,7 @@ Destino dos registros: banco próprio, tabelas leads e lead_submissions. O conta
 Após instalar as dependências e gerar o build:
 
 ```text
-pnpm exec wrangler d1 execute DB --local --config dist/server/wrangler.json --file db/migrations/0001_leads.sql --persist-to .wrangler/leads-test
+pnpm exec wrangler d1 execute DB --local --config dist/server/wrangler.json --file drizzle/0000_small_naoko.sql --persist-to .wrangler/leads-test
 pnpm exec wrangler dev --config dist/server/wrangler.json --port 4173 --persist-to .wrangler/leads-test --var LEAD_CAPTURE_ENABLED:true --var STUDIO_CONTACT_EMAIL:marioserafim.da@gmail.com --var RATE_LIMIT_SALT:local-test-only
 ```
 

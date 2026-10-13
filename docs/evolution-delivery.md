@@ -25,7 +25,7 @@ O diagnóstico tem sete perguntas, com apresentação específica por segmento, 
 - app/contact/page.tsx, data/contact.ts, app/privacy/page.tsx: contato e transparência.
 - components/site-chrome.tsx, app/sitemap.ts: navegação brasileira e descoberta.
 - data/case-media.ts, components/projects/case-applications.tsx, components/projects/project-card.tsx, app/work/[slug]/page.tsx: cases e estrutura de imagens.
-- worker/leads.ts, worker/index.ts, db/schema.ts, db/migrations/0001_leads.sql, .openai/hosting.json: API e armazenamento.
+- worker/leads.ts, worker/index.ts, db/schema.ts, drizzle/0000_small_naoko.sql, .openai/hosting.json: API e armazenamento.
 - tests/leads.test.mjs: persistência, duplicidades, consentimentos, falhas e limites.
 
 ## Validação executada
