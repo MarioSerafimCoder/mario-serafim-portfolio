@@ -1,28 +1,16 @@
 import type { Metadata } from "next";
-import { ContactSheet } from "../../components/projects/contact-sheet";
+import { ProjectGrid } from "../../components/editorial-projects";
 import { projects } from "../../data/projects";
 
 export const metadata: Metadata = {
-  title: "Projetos — Mário Serafim",
-  description: "Projetos selecionados de direção criativa, direção de arte e experiências digitais.",
+  title: "Projetos",
+  description: "Projetos selecionados de identidade visual e direção de arte de Mário Serafim.",
 };
 
 export default function WorkPage() {
-  return (
-    <main className="inner-page work-page">
-      <header className="page-hero work-hero">
-        <p>01 / FOLHA DE CONTATO</p>
-        <h1>Projetos.</h1>
-        <p>Identidade, campanha e produto. Quatro trabalhos, vistos de perto.</p>
-      </header>
-
-      <ContactSheet projects={projects} />
-      <section className="work-statement">
-        <p>Abordagem / 2026</p>
-        <h2>Da matéria<br />ao uso.</h2>
-        <p>A escala e o contexto mudam. A direção acompanha: escolho a linguagem, testo as aplicações e cuido da execução.</p>
-      </section>
-    </main>
-  );
+  return <main className="subpage work-page content-wrap">
+    <header className="subpage-heading"><span className="eyebrow"><span className="red-incision" aria-hidden="true" />Portfólio / projetos</span><h1>Identidades com<br /><em>presença.</em></h1><p>Uma seleção de marcas desenhadas para comunicar com clareza e permanecer na memória.</p></header>
+    <ProjectGrid projects={projects} />
+    <section className="work-end"><p>O próximo projeto começa por uma conversa.</p><a href="/contact" className="text-link">Fale sobre sua marca <span aria-hidden="true">↗</span></a></section>
+  </main>;
 }
-

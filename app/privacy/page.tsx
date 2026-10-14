@@ -1,2 +1,18 @@
-import { contactConfig } from "../../data/contact";
-export default function Privacy() { return <main className="legal-page privacy-copy"><p>Atualizada em 13/10/2026</p><h1>Privacidade.</h1><h2>Dados sob seu controle.</h2><p>Mário Serafim é responsável pelos dados recebidos neste site. Para acesso, correção, exclusão ou revogação de consentimento, escreva para <a href={`mailto:${contactConfig.email}`}>{contactConfig.email}</a>.</p><h2>Contato e diagnóstico</h2><p>Com sua autorização, armazenamos nome, e-mail, segmento, estágio profissional, mensagem, respostas do diagnóstico, parâmetros de campanha e data do envio em banco próprio operado na infraestrutura Cloudflare. O cadastro só é confirmado depois da gravação. Quando indisponível, o diagnóstico permite visualizar recomendações locais sem concluir um cadastro.</p><h2>Autorizações separadas</h2><p>A autorização para registrar o diagnóstico ou responder ao contato é separada da opção de receber comunicações comerciais. Registramos a escolha de cada envio, sua data e a versão do texto de consentimento. A opção comercial é voluntária e pode ser revogada pelo contato acima.</p><h2>Proteção e retenção</h2><p>Não envie informações de saúde de pacientes ou outros dados sensíveis. Um identificador temporário derivado do endereço de rede é usado para limitar spam; não armazenamos o IP em texto aberto. O registro temporário expira em uma hora e é removido em envios posteriores. Os contatos são mantidos pelo tempo necessário ao atendimento ou até pedido de exclusão, ressalvadas obrigações aplicáveis. O responsável deve revisar periodicamente a necessidade de retenção.</p><h2>No navegador</h2><p>Parâmetros de campanha podem permanecer durante a sessão para identificar a origem do contato. Preferências de visualização e, quando habilitada, a sacola podem ser guardadas no navegador. Não há envio automático de relatório por e-mail. As respostas do diagnóstico orientam recomendações e não representam uma análise de materiais.</p></main>; }
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Privacidade" };
+
+export default function Privacy() {
+  return <main className="legal-page">
+    <p>Atualizada em 14/10/2026</p>
+    <h1>Privacidade.</h1>
+    <h2>Seus dados e seu contato</h2>
+    <p>Mário Serafim é responsável pelas informações recebidas por este site. Para solicitar acesso, correção, exclusão ou revogar uma autorização, escreva para <a href="mailto:marioserafim.da@gmail.com">marioserafim.da@gmail.com</a>.</p>
+    <h2>Formulário de contato</h2>
+    <p>Ao enviar o formulário, registramos nome, e-mail, empresa ou marca informada, descrição do projeto, data, autorização para resposta e eventuais parâmetros de campanha. Essas informações são usadas para responder à sua solicitação. O cadastro só é confirmado após a gravação no banco de dados operado na infraestrutura Cloudflare.</p>
+    <h2>Proteção e retenção</h2>
+    <p>Não inclua dados sensíveis ou informações de terceiros na descrição do projeto. Um identificador temporário derivado do endereço de rede limita envios excessivos; o endereço de rede não é armazenado em texto aberto. O registro temporário expira em uma hora e é removido em envios posteriores. Os contatos são mantidos pelo tempo necessário ao atendimento ou até pedido de exclusão, ressalvadas obrigações aplicáveis.</p>
+    <h2>No navegador</h2>
+    <p>Parâmetros de campanha podem permanecer durante a sessão para identificar a origem do contato. O formulário não inscreve você em comunicações comerciais.</p>
+  </main>;
+}

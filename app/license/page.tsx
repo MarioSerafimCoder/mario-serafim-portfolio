@@ -1,1 +1,2 @@
-export default function License(){return <main className="legal-page"><p>Produtos digitais</p><h1>Licença.</h1><h2>Uso pessoal e comercial.</h2><p>Os produtos podem ser adaptados em projetos próprios, mas não podem ser revendidos, redistribuídos ou disponibilizados como arquivos editáveis. As condições específicas acompanham cada produto.</p></main>}
+import { redirect } from "next/navigation";
+export default function License() { redirect("/terms"); }

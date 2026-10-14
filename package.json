@@ -11,7 +11,7 @@
     "build": "vinext build",
     "start": "vinext start",
     "test": "vinext build && node --test tests/*.test.mjs",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern tmp",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern tmp --ignore-pattern output",
     "db:generate": "drizzle-kit generate",
     "typecheck": "tsc --noEmit"
   },

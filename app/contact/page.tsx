@@ -1,3 +1,11 @@
-import { LeadForm } from "../../components/lead-form";
-import { contactConfig } from "../../data/contact";
-export default function ContactPage() { return <main className="inner-page dark-page"><header className="contact-hero"><p>MS/ / Contato</p><h1>Vamos<br />conversar.</h1><p>Uma marca começa<br />com uma boa conversa.</p></header><section className="contact-intro"><p>Antes de escrever</p><h2>Conte o essencial.</h2><p>Compartilhe seu momento profissional e o que deseja construir. O escopo e o investimento serão conversados a partir do seu contexto.</p></section><LeadForm /><section className="contact-expectations"><p>O que acontece depois</p><div><span>01</span><strong>Leitura</strong><p>Se o envio for confirmado, sua solicitação estará registrada para leitura.</p></div><div><span>02</span><strong>Conversa</strong><p>Mário poderá responder pelo e-mail informado para alinhar necessidades e escopo.</p></div><div><span>03</span><strong>Proposta</strong><p>O caminho, os prazos e o investimento são definidos para o seu projeto.</p></div></section><p className="direct-contact">Prefere escrever diretamente? <a href={`mailto:${contactConfig.email}`}>{contactConfig.email}</a></p></main>; }
+import type { Metadata } from "next";
+import { ContactForm } from "../../components/contact-form";
+
+export const metadata: Metadata = { title: "Contato", description: "Converse com Mário Serafim sobre um projeto de identidade visual ou direção de arte." };
+
+export default function ContactPage() {
+  return <main className="subpage contact-page content-wrap">
+    <header className="subpage-heading"><span className="eyebrow"><span className="red-incision" aria-hidden="true" />Contato / próximo projeto</span><h1>Vamos<br /><em>conversar.</em></h1><p>Conte o essencial sobre a sua marca. A conversa começa por aqui.</p></header>
+    <div className="contact-layout"><div className="contact-direct"><span className="eyebrow">Contato direto</span><a href="mailto:marioserafim.da@gmail.com">marioserafim.da@gmail.com <span aria-hidden="true">↗</span></a><p>Se preferir, escreva por e-mail. Compartilhe seu contexto e o que deseja desenvolver.</p></div><ContactForm /></div>
+  </main>;
+}

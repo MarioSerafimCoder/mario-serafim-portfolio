@@ -1,3 +1,2 @@
-import { SegmentPage } from "../../components/segment-page";
-export const metadata = { title: "Branding para médicos | Mário Serafim" };
-export default function Page() { return <SegmentPage segment="medicos" />; }
+import { redirect } from "next/navigation";
+export default function Page() { redirect("/process"); }

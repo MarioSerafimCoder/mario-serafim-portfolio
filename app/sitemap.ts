@@ -1,1 +1,11 @@
-import type { MetadataRoute } from "next"; import { projects } from "../data/projects"; export default function sitemap():MetadataRoute.Sitemap{const base="https://mario-serafim-portfolio.mario-92.chatgpt.site";const routes=["","/work","/process","/about","/contact","/privacy","/terms","/license","/medicos","/arquitetos","/diagnostico","/diagnostico/medicos","/diagnostico/arquitetos"];return [...routes.map(url=>({url:base+url,lastModified:new Date()})),...projects.map(p=>({url:`${base}/work/${p.slug}`,lastModified:new Date()}))]}
+import type { MetadataRoute } from "next";
+import { projects } from "../data/projects";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const base = "https://mario-serafim-portfolio.mario-92.chatgpt.site";
+  const routes = ["", "/work", "/process", "/about", "/contact", "/privacy", "/terms"];
+  return [
+    ...routes.map((path) => ({ url: base + path, lastModified: new Date() })),
+    ...projects.map((project) => ({ url: `${base}/work/${project.slug}`, lastModified: new Date() })),
+  ];
+}

@@ -24,7 +24,7 @@ export async function captureLead(request: Request, env: LeadEnv) {
   const name = str("name"), email = str("email").toLowerCase(), segment = str("segment"), stage = str("stage"), kind = str("kind"), message = str("message");
   if (str("website")) return fail(400, "Não foi possível validar o envio.");
   if (name.length < 2 || name.length > 100 || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(422, "Revise seu nome e e-mail.");
-  if (!["medicos", "arquitetos", "outro"].includes(segment) || !stages.some(s => s === stage) || !["diagnostic", "contact"].includes(kind)) return fail(422, "Revise segmento e estágio profissional.");
+  if (!["medicos", "arquitetos", "outro"].includes(segment) || !(stages.some(s => s === stage) || (kind === "contact" && stage === "Contato inicial")) || !["diagnostic", "contact"].includes(kind)) return fail(422, "Revise segmento e estágio profissional.");
   if (body.serviceConsent !== true || typeof body.marketingConsent !== "boolean") return fail(422, "Confirme a autorização para este atendimento.");
   if (message.length > 3000 || (kind === "contact" && message.length < 10)) return fail(422, "Escreva uma mensagem entre 10 e 3.000 caracteres.");
   const answers = body.answers;
