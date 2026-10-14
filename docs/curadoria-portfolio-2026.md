@@ -1,6 +1,6 @@
 # Curadoria do portfólio — outubro de 2026
 
-Fonte: [pasta de projetos no Google Drive](https://drive.google.com/drive/folders/1pgrqJqv2OJC0eYsOtJ1LN5AbTDwsx-ID). O titular confirmou autorização de divulgação de todos os projetos em 14/10/2026. A seleção abaixo privilegia força visual, qualidade das aplicações, diversidade e adequação comercial.
+Fonte: arquivo de projetos fornecido pelo titular. O titular confirmou autorização de divulgação de todos os projetos em 14/10/2026. A seleção abaixo privilegia força visual, qualidade das aplicações, diversidade e adequação comercial. O repositório documenta a origem das peças publicadas sem disponibilizar os materiais brutos.
 
 | Destino | Projeto | Decisão |
 | --- | --- | --- |
