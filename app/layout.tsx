@@ -1,23 +1,22 @@
 import type { Metadata } from "next";
-import { Schibsted_Grotesk } from "next/font/google";
 import "./portfolio.css";
+import "./premium.css";
 import { SiteChrome } from "../components/site-chrome";
 
 const siteUrl = "https://mario-serafim-portfolio.mario-92.chatgpt.site";
 
-const schibsted = Schibsted_Grotesk({ variable: "--font-sans", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "Mário Serafim — Identidade Visual & Direção de Arte", template: "%s — Mário Serafim" },
-  description: "Identidades visuais e direção de arte para marcas que valorizam estética, precisão e confiança. Conheça projetos de Mário Serafim.",
+  description: "Identidades visuais com precisão, presença e permanência. Conheça os projetos de Mário Serafim.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
   },
   openGraph: {
     title: "Mário Serafim — Identidade Visual & Direção de Arte",
-    description: "A percepção constrói valor. Projetos de identidade visual e direção de arte de Mário Serafim.",
+    description: "Identidades visuais com precisão, presença e permanência. Projetos de Mário Serafim.",
     url: siteUrl,
     siteName: "Mário Serafim",
     locale: "pt_BR",
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mário Serafim — Identidade Visual & Direção de Arte",
-    description: "A percepção constrói valor. Projetos de identidade visual e direção de arte.",
+    description: "Identidades visuais com precisão, presença e permanência.",
     images: ["/og.png"],
   },
 };
@@ -39,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={schibsted.variable}>
+      <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",
